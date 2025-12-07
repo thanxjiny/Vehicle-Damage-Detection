@@ -60,7 +60,7 @@ Confidence Threshold(임계값)를 변경해가며 전체 데이터셋에 대한
 | **0.25** |Non-Vehicle| 0.68 | 0.99 | 0.81 | precision 낮음 |
 | **0.25** |Vehicle| 0.99 | 0.80 | 0.88 | recall 낮음 |
 | **0.10** |Non-Vehicle| 0.74 | 0.96 | 0.84 | precision 상승 |
-| **0.10** |Vehicle| 0.91 | 0.89 | 0.89 | recall 상승 |
+| **0.10** |Vehicle| 0.98 | 0.85 | 0.91 | recall 상승 |
 
 ### 💡 Findings
 * confidence threshold 하향(0.25->0.10)한 결과, 재현율(Recall)은 높으나, accuracy 3.3% 상승
