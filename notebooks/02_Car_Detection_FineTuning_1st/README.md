@@ -56,7 +56,7 @@
 
 | **Baseline (pre-trained)** | **Fine-tuned. ver1.0** |
 | :---: | :---: |
-| ![Conf 0.10](./results/01_detection/confusion_matrix_010.png) | ![Conf 0.10](./results/01_detection/confusion_matrix_fine_tuning_1st.png) |
+| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) |
 
 | Model | Class | Precision | Recall | f1 | 비고 |
 | :---: | :---: | :---: | :---: | :--- | :--- |
