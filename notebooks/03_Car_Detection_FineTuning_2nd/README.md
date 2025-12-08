@@ -1,3 +1,5 @@
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/edit/main/notebooks/03_Car_Detection_FineTuning_2nd/3_study1_yolov8x_fine_tuning_2nd.ipynb)
+
 # 🚀 Step 3. YOLOv8x Fine-tuning (2nd Attempt)
 
 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행
