@@ -6,7 +6,7 @@
 
 ## 🎯 Objective (실험 목표)
 1.  **Domain Adaptation:** 일반적인 COCO 데이터셋뿐만 아니라, **심하게 파손된 차량(Damaged Car)** 데이터 분포에 모델을 적응시킴
-2.  **Performance Boost:** 베이스라인 대비 **mAP(평균 정밀도)**와 **Recall(재현율)**을 얼마나 향상시킬 수 있는지 확인
+2.  **Performance Boost:** 베이스라인 대비 **mAP(평균 정밀도)** 와 **Recall(재현율)** 을 얼마나 향상시킬 수 있는지 확인
 3.  **Optimization:** 우리 데이터셋에 맞는 최적의 하이퍼파라미터(Epochs, Batch size 등)를 탐색
 
 ## 🛠 Experiment Setup (학습 환경)
@@ -88,6 +88,10 @@
 - 이미지 시각화 결과, labeling 문제를 하이브리드 전략으로 개선한 것으로 확인
     - GT : 차량 파손 부위 일부를 라벨링
     - predicted : 차량 전체 향상을 라벨링
+
+## 🛠 오탐 대상 
+| :---: |
+| ![Baseline](./results/02_train_results/results.png) | 
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략을 활용한 Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(97.45%)
