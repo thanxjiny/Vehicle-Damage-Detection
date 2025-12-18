@@ -73,7 +73,7 @@
 | **Fine-tuned. ver1.0** |Non-Vehicle| 0.73 | 0.98 | 0.84 |  
 | **Fine-tuned. ver1.0** |Vehicle| 0.99 | 0.84 | 0.91 | 
 | **Fine-tuned. ver2.0** |Non-Vehicle| 0.97 | 0.95 | 0.96 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.98 | 0.99 | 0.98 | 
+| **Fine-tuned. ver2.0** |Vehicle| 0.98 | 03093333.99 | 0.98 | 
 
 | **model results** | 
 | :---: | 
@@ -90,8 +90,11 @@
     - predicted : 차량 전체 향상을 라벨링
 
 ## 🛠 오탐 대상 
+ - damaged images(2) 중 이미지가 뒤집혔거나, 파손 부위가 확대된 차량 이미지를 인식하지 못함
+
+| **false samples** | 
 | :---: |
-| ![Baseline](./results/02_train_results/results.png) | 
+| <img src="./results/01_detection/2nd_false_sample.png" width="50%"> |
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략을 활용한 Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(97.45%)
