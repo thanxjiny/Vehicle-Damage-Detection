@@ -53,18 +53,19 @@
 
 ### 1. Metrics Comparison (베이스라인 vs 파인튜닝 1st vs 파인튜닝 2nd)
 
-| Model | Accuracy | average inference speed | FPS | GPU | test | fail |비고 |
-| :---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |
-| **Baseline (pre-trained)** |88.71%| 48.23 ms/장 | 20.73 FPS |T4|1957 | 221 |no-tuning |
-| **Fine-tuned. ver1.0** |88.27%| 20.60 ms/장 | 48.55 FPS |L4|196 | 23 | freeze10 + epoch 50 |
-| **Fine-tuned. ver2.0** |97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
+| Class | Model | Accuracy | average inference speed | FPS | GPU | test | fail |비고 |
+| :---: | :---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |
+| **Baseline (pre-trained)** |yolo v8x|88.71%| 48.23 ms/장 | 20.73 FPS |T4|1957 | 221 |no-tuning |
+| **Fine-tuned. ver1.0** | yolo v8x|88.27%| 20.60 ms/장 | 48.55 FPS |L4|196 | 23 | freeze10 + epoch 50 |
+| **Fine-tuned. ver2.0** | yolo v8x|97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
+| **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
 
 ### 💡 Findings
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 97.45%)하였고, 특히 FN는 줄고, TP가 상승하였다.
 
-| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** |
-| :---: | :---: | :---: |
-| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) |
+| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** |
+| :---: | :---: | :---: | :---: |
+| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) |
 
 | Model | Class | Precision | Recall | f1 | 
 | :---: | :---: | :---: | :---: | :--- | 
@@ -73,7 +74,9 @@
 | **Fine-tuned. ver1.0** |Non-Vehicle| 0.73 | 0.98 | 0.84 |  
 | **Fine-tuned. ver1.0** |Vehicle| 0.99 | 0.84 | 0.91 | 
 | **Fine-tuned. ver2.0** |Non-Vehicle| 0.97 | 0.95 | 0.96 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.98 | 03093333.99 | 0.98 | 
+| **Fine-tuned. ver2.0** |Vehicle| 0.98 | 0.99 | 0.98 | 
+| **Fine-tuned. ver3.0** |Non-Vehicle| 0.98 | 0.97 | 0.97 |
+| **Fine-tuned. ver3.0** |Vehicle| 0.99 | 0.99 | 0.99 | 
 
 | **model results** | 
 | :---: | 
@@ -96,5 +99,19 @@
 | :---: |
 | <img src="./results/01_detection/2nd_false_sample.png" width="50%"> |
 
+## fine-tuning 3rd
+   1) 해상도 증가하여 미세한 부위 명확히 구분
+   2) 모델 경량화하여 리소스 효율성 확보 및 과적합 방지
+   3) **Mosaic 증강** 종료 시점 설정
+      - Mosaic 증강이란? 4장의 이미지를 랜덤하게 잘라 붙여서 1장으로 만드는 기법. 이는 모델이 다양한 스케일과 배경을 학습하게 하여 일반화 성능을 높여줌.
+      - 왜 끄나요? Mosaic 이미지는 인위적으로 합성된 이미지라 실제 자연스러운 이미지와는 다름. 학습 초기에는 좋지만, 후반부에는 **실제 원본 이미지**의 분포를 익혀야 파손 부위의 정확한 좌표를 잡을 수 있음
+      - 효과: 마지막 15 Epoch 동안은 원본 형태의 이미지만 보게 하여, BBox(박스) 위치를 미세 조정하고 오탐을 줄여 성능을 안정화
+        
+| **false samples** | 
+| :---: |
+| <img src="./results/01_detection/3rd_false_sample.png" width="50%"> |
+   
+ 
+
 ## 📝 Conclusion 
-* **결론:** 하이브리드 라벨링을 전략을 활용한 Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(97.45%)
+* **결론:** 하이브리드 라벨링을 전략을 활용한 Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(98.47%)
