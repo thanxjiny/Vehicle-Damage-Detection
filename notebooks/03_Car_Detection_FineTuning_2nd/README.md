@@ -51,7 +51,7 @@
 ## 📊 Training Results (학습 결과)
 학습 완료 후 `model.val()`을 통해 얻은 최종 성능 지표입니다.
 
-### 1. Metrics Comparison (베이스라인 vs 파인튜닝 1st vs 파인튜닝 2nd)
+### 1. Metrics Comparison (베이스라인 vs 파인튜닝 1st vs 파인튜닝 2nd vs vs 파인튜닝 3rd)
 
 | Class | Model | Accuracy | average inference speed | FPS | GPU | test | fail |비고 |
 | :---: | :---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |
