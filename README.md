@@ -19,6 +19,8 @@
 | **Car Detection** | **Step 1** | 차량 인식 베이스라인 | YOLOv8x (Pre-trained) | ✅ Done | [상세보기](./notebooks/01_Baseline_Inference/README.md) |
 | **Car Detection** | **Step 2** | 차량 인식 파인튜닝_1st | YOLOv8 Custom | ✅ Done |  [상세보기](./notebooks/02_Car_Detection_FineTuning_1st/README.md) | |
 | **Car Detection** | **Step 3** | 차량 인식 파인튜닝_2nd | YOLOv8 Custom | ✅ Done | [상세보기](./notebooks/03_Car_Detection_FineTuning_2nd/README.md) | |
+| **Damage Detection** | **Step 1** | 파손 인식 파인튜닝_1st | YOLOv8 Custom | ✅ Done | [상세보기](./notebooks/04_Damage_Detection_FineTuning_1st/README.md) | |
+
 
 ## Tech Stack
 * Python 3.10
