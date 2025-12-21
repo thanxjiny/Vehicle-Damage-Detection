@@ -36,7 +36,7 @@
 
 | **dataset samples** | 
 | :---: |
-| <img src="./results/01_detection/car_damage_dataset_sample.png" width="50%"> |
+| <img src="./results/01_detection/car_damage_dataset_sample.png" width="100%"> |
 
 
 
@@ -57,67 +57,38 @@
 
 ## 📊 Performance Evaluation (test set)
 
-### 1. Metrics Comparison (베이스라인 vs 파인튜닝 1st vs 파인튜닝 2nd vs vs 파인튜닝 3rd)
+### 1. Metrics Comparison (파인튜닝 1st vs 파인튜닝 2nd * inference confidence threshold)
 
-| Class | Model | Accuracy | average inference speed | FPS | GPU | test | fail |비고 |
-| :---: | :---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |
-| **Baseline (pre-trained)** |yolo v8x|88.71%| 48.23 ms/장 | 20.73 FPS |T4|1957 | 221 |no-tuning |
-| **Fine-tuned. ver1.0** | yolo v8x|88.27%| 20.60 ms/장 | 48.55 FPS |L4|196 | 23 | freeze10 + epoch 50 |
-| **Fine-tuned. ver2.0** | yolo v8x|97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
-| **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
+| Class | Model | Confidence score | Accuracy | average inference speed | FPS | GPU | test | fail |mAP50|mAP50-95|비고 |
+| :---: | :---: |:---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |:---: |:---: |
+| **Fine-tuned. ver1.0** | yolo v8m|0.25|85.29%| 11.06 ms/장 | 90.43 FPS |A100|136 | 20 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver1.0** | yolo v8m|0.10|90.44%| 11.04 ms/장 | 90.55 FPS |A100|136 | 13 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver2.0** | yolo v8x|0.25|92.65%| 21.81 ms/장 | 45.85 FPS |A100|136 | 10 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
+| **Fine-tuned. ver2.0** | yolo v8x|0.10|95.59%| 22.27 ms/장 | 44.09 FPS |A100|136 | 6 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
 
 ### 💡 Findings
-* fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
+* fine-tuning과 inference confidence threshold 조정을 통해 Accuracy는 비약적으로 상승(85.29% > 95.59%)
 
-| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** |
+| **Fine-tuned. ver1.0(0.25)** | **Fine-tuned. ver1.0(0.1)** | **Fine-tuned. ver2.0(0.25)** | **Fine-tuned. ver2.0(0.1)** |
 | :---: | :---: | :---: | :---: |
-| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) |
+| ![v1+0.25](./results/01_detection/confusion_matrix_fine_tuning_1st_025.png) | ![v1+0.10](./results/01_detection/confusion_matrix_fine_tuning_1st_010.png) | ![v2+0.25](./results/01_detection/confusion_matrix_fine_tuning_2nd_025.png) | ![v2+0.10](./results/01_detection/confusion_matrix_fine_tuning_2nd_010.png) |
 
 | Model | Class | Precision | Recall | f1 | 
-| :---: | :---: | :---: | :---: | :--- | 
-| **Baseline (pre-trained)** |Non-Vehicle| 0.74 | 0.96 | 0.84 |  
-| **Baseline (pre-trained)** |Vehicle| 0.98 | 0.85 | 0.91 | 
-| **Fine-tuned. ver1.0** |Non-Vehicle| 0.73 | 0.98 | 0.84 |  
-| **Fine-tuned. ver1.0** |Vehicle| 0.99 | 0.84 | 0.91 | 
-| **Fine-tuned. ver2.0** |Non-Vehicle| 0.97 | 0.95 | 0.96 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.98 | 0.99 | 0.98 | 
-| **Fine-tuned. ver3.0** |Non-Vehicle| 0.98 | 0.97 | 0.97 |
-| **Fine-tuned. ver3.0** |Vehicle| 0.99 | 0.99 | 0.99 | 
+| :---: | :---: | :---: | :---: | :--- |  
+| **Fine-tuned. ver1.0** |Non-Vehicle| 0.62 | 0.59 | 0.61 |  
+| **Fine-tuned. ver1.0** |Vehicle| 0.94 | 0.95 | 0.95 | 
+| **Fine-tuned. ver2.0** |Non-Vehicle| 0.87 | 0.76 | 0.81 |
+| **Fine-tuned. ver2.0** |Vehicle| 0.97 | 0.98 | 0.97 | 
 
-| **model results** | 
-| :---: | 
-| ![Baseline](./results/02_train_results/results.png) | 
-
-| **valid sample** | 
-| :---: | 
-| ![valid sample](./results/02_train_results/val_batch0_pred.jpg) | 
-
-## 원인 추정(1st 문제점 해결 여부)
-- fine-tuning 1st 모델의 성능이 향상하지 못 했던 원인은 **학습 데이터 간의 "정답 기준"이 서로 다르기 때문**일 가능성으로 추정
-- 이미지 시각화 결과, labeling 문제를 하이브리드 전략으로 개선한 것으로 확인
-    - GT : 차량 파손 부위 일부를 라벨링
-    - predicted : 차량 전체 향상을 라벨링
 
 ## 🛠 오탐 대상 
- - damaged images(2) 중 이미지가 뒤집혔거나, 파손 부위가 확대된 차량 이미지를 인식하지 못함
+ - ver2.0의 confidence threhold 0.1 기준 총 6개의 오탐
+ - damaged(2), normal(4)
 
 | **false samples** | 
 | :---: |
-| <img src="./results/01_detection/2nd_false_sample.png" width="50%"> |
+| <img src="./results/01_detection/false_samples.png" width="50%"> |
 
-## fine-tuning 3rd
-   1) 해상도 증가하여 미세한 부위 명확히 구분
-   2) 모델 경량화하여 리소스 효율성 확보 및 과적합 방지
-   3) **Mosaic 증강** 종료 시점 설정
-      - Mosaic 증강이란? 4장의 이미지를 랜덤하게 잘라 붙여서 1장으로 만드는 기법. 이는 모델이 다양한 스케일과 배경을 학습하게 하여 일반화 성능을 높여줌.
-      - 왜 끄나요? Mosaic 이미지는 인위적으로 합성된 이미지라 실제 자연스러운 이미지와는 다름. 학습 초기에는 좋지만, 후반부에는 **실제 원본 이미지**의 분포를 익혀야 파손 부위의 정확한 좌표를 잡을 수 있음
-      - 효과: 마지막 15 Epoch 동안은 원본 형태의 이미지만 보게 하여, BBox(박스) 위치를 미세 조정하고 오탐을 줄여 성능을 안정화
-        
-| **false samples** | 
-| :---: |
-| <img src="./results/01_detection/3rd_false_sample.png" width="50%"> |
-   
- 
 
 ## 📝 Conclusion 
-* **결론:** 하이브리드 라벨링을 전략을 활용한 Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(98.47%)
+* **결론:** Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(95.59%)
