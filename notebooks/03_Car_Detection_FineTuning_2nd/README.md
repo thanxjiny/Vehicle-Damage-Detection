@@ -61,7 +61,7 @@
 | **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
 
 ### 💡 Findings
-* fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 97.45%)하였고, 특히 FN는 줄고, TP가 상승하였다.
+* fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
 
 | **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** |
 | :---: | :---: | :---: | :---: |
