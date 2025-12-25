@@ -26,6 +26,16 @@ AI-Hub의 파손 차량 데이터와 COCO 데이터셋의 정상 차량/배경 �
 
 > **Note:** Normal 차량의 목표는 600장이었으나, 고품질 학습을 위해 **BBox Area Threshold(5%)** 를 엄격하게 적용하여 조건에 부합하는 157장만 선별
 
+#### Dataset 추가
+normal 데이터의 부족분을 kaggle 데이터셋에서 총 920개 추가
+
+| Class (Category) | Source | Images | Labels | Note |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Damaged** | AI-Hub | **1,200** | 1,200 | 차량 파손 이미지 (Training Target) |
+| **2. Normal** | COCO 2017+kaggle | **1,077** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) |
+| **3. Background** | COCO 2017 | **600** | - | 차량 없음 (Negative Samples) |
+| **Total** | | **2,877** | | **✅ 구축 완료** |
+
 #### Directory Structure
 데이터셋은 아래와 같은 폴더 구조로 저장됩니다.
 
@@ -35,6 +45,8 @@ Dataset_No_Resizing/
 │   ├── images/  # .jpg
 │   └── labels/  # .txt (JSON)
 ├── normal/
+│   └── images/  # .jpg (Labels not required for background usage)
+├── normal(kaggle_dataset)/
 │   └── images/  # .jpg (Labels not required for background usage)
 └── background/
     └── images/  # .jpg
