@@ -2,7 +2,7 @@
 
 
 
-### Step 0. Dataset Preparation
+### Step 1. Dataset Preparation
 
 딥러닝 모델 학습을 위한 **차량 이미지 Dataset**을 구축하는 단계  
 AI-Hub의 파손 차량 데이터와 COCO 데이터셋의 정상 차량/배경 이미지를 결합하여, **파손 탐지**뿐만 아니라 **오탐지(False Positive) 방지**까지 고려한 데이터셋을 설계
@@ -24,7 +24,7 @@ AI-Hub의 파손 차량 데이터와 COCO 데이터셋의 정상 차량/배경 �
 | **3. Background** | COCO 2017 | **600** | - | 차량 없음 (Negative Samples) |
 | **Total** | | **1,957** | | **✅ 구축 완료** |
 
-> **Note:** Normal 차량의 목표는 600장이었으나, 고품질 학습을 위해 **BBox Area Threshold(5%)**를 엄격하게 적용하여 조건에 부합하는 157장만 선별
+> **Note:** Normal 차량의 목표는 600장이었으나, 고품질 학습을 위해 **BBox Area Threshold(5%)** 를 엄격하게 적용하여 조건에 부합하는 157장만 선별
 
 #### Directory Structure
 데이터셋은 아래와 같은 폴더 구조로 저장됩니다.
