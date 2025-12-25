@@ -2,8 +2,8 @@
 
 # 🚀 Step 4. YOLOv8x Fine-tuning (3rd Attempt)
 
-베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
-기존 normal 데이터의 부족으로 인한 클래스 불균형을 kaggle 데이터로 보충
+* 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
+* 기존 normal 데이터의 부족으로 인한 클래스 불균형을 kaggle 데이터로 보충
 
 ## 🎯 Objective (실험 목표)
 1.  **Domain Adaptation:** 일반적인 COCO 데이터셋뿐만 아니라, **심하게 파손된 차량(Damaged Car)** 데이터 분포에 모델을 적응시킴
