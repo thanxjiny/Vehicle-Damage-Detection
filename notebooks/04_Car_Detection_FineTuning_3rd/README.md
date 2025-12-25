@@ -102,7 +102,7 @@
 
 | **false samples** | 
 | :---: |
-| <img src="./results/01_detection/3rd_false_sample.png" width="50%"> |
+| <img src="./results/01_detection/2nd_false_sample.png" width="50%"> |
 
 ## fine-tuning 3rd
    1) 해상도 증가하여 미세한 부위 명확히 구분
@@ -114,7 +114,7 @@
         
 | **false samples** | 
 | :---: |
-| <img src="./results/01_detection/3rd_false_sample.png" width="50%"> |
+| <img src="./results/01_detection/4th_false_sample.png" width="50%"> |
    
 
 ## 📝 Conclusion 
