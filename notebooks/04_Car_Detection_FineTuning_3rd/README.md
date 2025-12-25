@@ -66,9 +66,9 @@
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
 * (추가) normal 데이터셋을 추가하여 아주 소폭 accuracy 하락
 
-| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** |
-| :---: | :---: | :---: | :---: |
-| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) |
+| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** | **Fine-tuned. ver4.0** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) | ![Fine-tuned4](./results/01_detection/confusion_matrix_fine_tuning_4th.png) |
 
 | Model | Class | Precision | Recall | f1 | 
 | :---: | :---: | :---: | :---: | :--- | 
