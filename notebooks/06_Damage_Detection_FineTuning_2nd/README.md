@@ -16,7 +16,7 @@
      
 ## Experiment Setup (학습 환경)
 * **Model:** YOLOv8 
-* **Environment:** Google Colab Pro (A100 / T4 GPU)
+* **Environment:** Google Colab Pro (T4 GPU)
 
 ## 🛠 Workflow
 
@@ -83,8 +83,8 @@
 
 
 ## 🛠 오탐 대상 
- - ver2.0의 confidence threhold 0.1 기준 총 6개의 오탐
- - damaged(2), normal(4)
+ - ver1.0의 confidence threhold 0.1 기준 총 17개의 오탐
+ - damaged(8), normal(9)
 
 | **false samples** | 
 | :---: |
