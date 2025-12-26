@@ -2,7 +2,7 @@
 
 # 🚀 차량 파손 탐지((Car Damage Detection)
 * 차량 이미지에서 파손 여부 및 파손 부위를 탐지하는 AI 모델 개발. 기존에 학습된 **차량 탐지 모델(Study 1)** 을 전처리기(Preprocessor)로 활용하여, 차량 영역을 크롭(Crop)한 뒤 파손을 탐지하는 2-Stage Pipeline을 구축
-* kaggle normal 데이터를 추가하여 class 불균형을 
+* kaggle normal 데이터를 추가하여 class 불균형 완화화
 
 ## 🎯 Objective (실험 목표)
 1. **Goal** : 차량 이미지에서 파손된 부위(Damage)를 정확하게 탐지하고, 정상 차량과 파손 차량을 분류.
@@ -51,10 +51,10 @@
   
 | class | count | ratio | 
 | :---: | :---: | :---: | 
-| Train | 949 | 0.7 |
-| Valid | 272 | 0.2 | 
-| Test | 136 | 0.1 |  
-| total | 1357 | 1.0 | 
+| Train | 1,504 | 0.7 |
+| Valid | 430 | 0.2 | 
+| Test | 215 | 0.1 |  
+| total | 2,149 | 1.0 | 
 
 ## 📊 Performance Evaluation (test set)
 
@@ -62,8 +62,8 @@
 
 | Class | Model | Confidence score | Accuracy | average inference speed | FPS | GPU | test | fail |mAP50|mAP50-95|비고 |
 | :---: | :---: |:---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |:---: |:---: |
-| **Fine-tuned. ver1.0** | yolo v8m|0.25|85.29%| 11.06 ms/장 | 90.43 FPS |A100|136 | 20 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver1.0** | yolo v8m|0.10|90.44%| 11.04 ms/장 | 90.55 FPS |A100|136 | 13 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver1.0** | yolo v8m|0.25|86.51%| 1385.98 ms/장 | 0.72 FPS |T4|215 | 29 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver1.0** | yolo v8m|0.10|92.09%| 1379.23 ms/장 | 0.73 FPS |T4|215 | 17 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
 | **Fine-tuned. ver2.0** | yolo v8x|0.25|92.65%| 21.81 ms/장 | 45.85 FPS |A100|136 | 10 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
 | **Fine-tuned. ver2.0** | yolo v8x|0.10|95.59%| 22.27 ms/장 | 44.09 FPS |A100|136 | 6 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
 
@@ -76,8 +76,8 @@
 
 | Model | Class | Precision | Recall | f1 | 
 | :---: | :---: | :---: | :---: | :--- |  
-| **Fine-tuned. ver1.0** |Non-Vehicle| 0.62 | 0.59 | 0.61 |  
-| **Fine-tuned. ver1.0** |Vehicle| 0.94 | 0.95 | 0.95 | 
+| **Fine-tuned. ver1.0(0.10)** |Non-Vehicle| 0.91 | 0.92 | 0.91 |  
+| **Fine-tuned. ver1.0(0.10)** |Vehicle| 0.93 | 0.93 | 0.93 | 
 | **Fine-tuned. ver2.0** |Non-Vehicle| 0.87 | 0.76 | 0.81 |
 | **Fine-tuned. ver2.0** |Vehicle| 0.97 | 0.98 | 0.97 | 
 
