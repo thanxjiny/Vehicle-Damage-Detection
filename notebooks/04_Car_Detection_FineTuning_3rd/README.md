@@ -8,7 +8,7 @@
 | Class (Category) | Source | Images | Labels | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | **1. Damaged** | AI-Hub | **1,200** | 1,200 | 차량 파손 이미지 (Training Target) |
-| **2. Normal** | COCO 2017+kaggle | **1,077** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) |
+| **2. Normal** | COCO 2017+kaggle | **1,077** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) + kaggle normal data |
 | **3. Background** | COCO 2017 | **600** | - | 차량 없음 (Negative Samples) |
 | **Total** | | **2,877** | | **✅ 구축 완료** |
 
