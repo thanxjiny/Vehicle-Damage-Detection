@@ -84,7 +84,7 @@
 
 ## 🛠 오탐 대상 
  - ver1.0의 confidence threhold 0.1 기준 총 17개의 오탐
- - damaged(8), normal(9)
+ - damaged(9), normal(8)
 
 | **false samples** | 
 | :---: |
