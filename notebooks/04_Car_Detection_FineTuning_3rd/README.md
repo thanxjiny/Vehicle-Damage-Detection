@@ -5,6 +5,13 @@
 * 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
 * 기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
 
+| Class (Category) | Source | Images | Labels | Note |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Damaged** | AI-Hub | **1,200** | 1,200 | 차량 파손 이미지 (Training Target) |
+| **2. Normal** | COCO 2017+kaggle | **1,077** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) |
+| **3. Background** | COCO 2017 | **600** | - | 차량 없음 (Negative Samples) |
+| **Total** | | **2,877** | | **✅ 구축 완료** |
+
 ## 🎯 Objective (실험 목표)
 1.  **Domain Adaptation:** 일반적인 COCO 데이터셋뿐만 아니라, **심하게 파손된 차량(Damaged Car)** 데이터 분포에 모델을 적응시킴
 2.  **Performance Boost:** 베이스라인 대비 **mAP(평균 정밀도)** 와 **Recall(재현율)** 을 얼마나 향상시킬 수 있는지 확인
