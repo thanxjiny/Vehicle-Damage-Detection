@@ -67,7 +67,7 @@
 | **Fine-tuned. ver1.0** | yolo v8x|88.27%| 20.60 ms/장 | 48.55 FPS |L4|196 | 23 | freeze10 + epoch 50 |
 | **Fine-tuned. ver2.0** | yolo v8x|97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
 | **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
-| **Fine-tuned. ver4.0** | yolo v8x|97.57%| 14.35 ms/장 | 69.69 FPS |L4|288 | 7 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 0|
+| **Fine-tuned. ver4.0** | yolo v8x|97.57%| 14.35 ms/장 | 69.69 FPS |L4|288 | 7 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 0 + kaggle dataset|
 
 ### 💡 Findings
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
@@ -104,8 +104,8 @@
     - GT : 차량 파손 부위 일부를 라벨링
     - predicted : 차량 전체 향상을 라벨링
 
-## 🛠 오탐 대상 
- - damaged images(2) 중 이미지가 뒤집혔거나, 파손 부위가 확대된 차량 이미지를 인식하지 못함
+## fine-tuning 2nd
+ - 오탐 5개 중 damaged images(2) 중 이미지가 뒤집혔거나, 파손 부위가 확대된 차량 이미지를 인식하지 못함
 
 | **false samples** | 
 | :---: |
@@ -120,8 +120,9 @@
       - 효과: 마지막 15 Epoch 동안은 원본 형태의 이미지만 보게 하여, BBox(박스) 위치를 미세 조정하고 오탐을 줄여 성능을 안정화
 
 ## fine-tuning 4th
-   kaggle 데이터셋 추가
-        
+  - kaggle 데이터셋 추가
+  - 오탐 7개
+   
 | **false samples** | 
 | :---: |
 | <img src="./results/01_detection/4th_false_sample.png" width="50%"> |
