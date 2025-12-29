@@ -2,7 +2,7 @@
 
 # 🚀 차량 파손 탐지(Car Damage Detection)
 * 차량 이미지에서 파손 여부 및 파손 부위를 탐지하는 AI 모델 개발. 기존에 학습된 **차량 탐지 모델(Study 1)** 을 전처리기(Preprocessor)로 활용하여, 차량 영역을 크롭(Crop)한 뒤 파손을 탐지하는 2-Stage Pipeline을 구축
-* kaggle dataset 중 normal 데이터 추가하여 class 불균형 완화화
+* **kaggle dataset** 중 normal 데이터 추가하여 class 불균형 완화화
 
 ## 🎯 Objective (실험 목표)
 1. **Goal** : 차량 이미지에서 파손된 부위(Damage)를 정확하게 탐지하고, 정상 차량과 파손 차량을 분류.
@@ -60,13 +60,13 @@
 
 | Class | Model | Confidence score | Accuracy | average inference speed | FPS | GPU | test | fail |mAP50|mAP50-95|비고 |
 | :---: | :---: |:---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |:---: |:---: |
-| **Fine-tuned. ver1.0** | yolo v8m|0.25|86.51%| 1385.98 ms/장 | 0.72 FPS |T4|215 | 29 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver1.0** | yolo v8m|0.10|92.09%| 1379.23 ms/장 | 0.73 FPS |T4|215 | 17 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver2.0** | yolo v8x|0.25|92.65%| 21.81 ms/장 | 45.85 FPS |A100|136 | 10 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
-| **Fine-tuned. ver2.0** | yolo v8x|0.10|95.59%| 22.27 ms/장 | 44.09 FPS |A100|136 | 6 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
+| **Fine-tuned. ver1.0** | yolo v8m|0.25|86.51%| 21.53 ms/장 | 46.45 FPS |T4|215 | 29 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver1.0** | yolo v8m|0.10|92.09%| 22.05 ms/장 | 45.35 FPS |T4|215 | 17 |0.427|0.313| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver2.0** | yolo v8l|0.25|89.30%| 41.70 ms/장 | 23.98 FPS |T4|215 | 23 |0.4424|0.2994| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
+| **Fine-tuned. ver2.0** | yolo v8l|0.10|93.49%| 37.27 ms/장 | 26.83 FPS |T4|215 | 14 |0.4424|0.2994| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
 
 ### 💡 Findings
-* fine-tuning과 inference confidence threshold 조정을 통해 Accuracy는 비약적으로 상승(85.29% > 95.59%)
+* fine-tuning과 inference confidence threshold 조정을 통해 Accuracy는 비약적으로 상승(86.51% > 93.49%)
 
 | **Fine-tuned. ver1.0(0.25)** | **Fine-tuned. ver1.0(0.1)** | **Fine-tuned. ver2.0(0.25)** | **Fine-tuned. ver2.0(0.1)** |
 | :---: | :---: | :---: | :---: |
@@ -74,19 +74,32 @@
 
 | Model | Class | Precision | Recall | f1 | 
 | :---: | :---: | :---: | :---: | :--- |  
+| **Fine-tuned. ver1.0(0.25)** |Non-Vehicle| 0.78 | 0.97 | 0.86 |  
+| **Fine-tuned. ver1.0(0.25)** |Vehicle| 0.97 | 0.78 | 0.87 | 
 | **Fine-tuned. ver1.0(0.10)** |Non-Vehicle| 0.91 | 0.92 | 0.91 |  
 | **Fine-tuned. ver1.0(0.10)** |Vehicle| 0.93 | 0.93 | 0.93 | 
-| **Fine-tuned. ver2.0** |Non-Vehicle| 0.87 | 0.76 | 0.81 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.97 | 0.98 | 0.97 | 
+| **Fine-tuned. ver2.0(0.25)** |Non-Vehicle| 0.82 | 0.97 | 0.89 |  
+| **Fine-tuned. ver2.0(0.25)** |Vehicle| 0.97 | 0.83 | 0.90 | 
+| **Fine-tuned. ver2.0(0.10)** |Non-Vehicle| 0.93 | 0.93 | 0.93 |  
+| **Fine-tuned. ver2.0(0.10)** |Vehicle| 0.94 | 0.94 | 0.94 | 
 
 
-## 🛠 오탐 대상 
- - ver1.0의 confidence threhold 0.1 기준 총 17개의 오탐
+## 🛠 오탐 대상 (ver 1.0)
+ - confidence threhold 0.1 기준 총 17개의 오탐
  - damaged(9), normal(8)
 
 | **false samples** | 
 | :---: |
 | <img src="./results/01_detection/false_samples.png" width="50%"> |
+
+## 🛠 오탐 대상 (ver 2.0)
+ - confidence threhold 0.1 기준 총 14개의 오탐
+ - damaged(7), normal(7)
+
+| **false samples** | 
+| :---: |
+| <img src="./results/01_detection/false_samples_2nd.png" width="50%"> |
+
 
 
 ## 📝 Conclusion 
