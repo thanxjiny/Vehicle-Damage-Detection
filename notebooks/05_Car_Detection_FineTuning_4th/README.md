@@ -4,7 +4,7 @@
 
 * 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
 * (3rd)기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
-* (4th)기존 damaged 데이터를 샘플 1,200장이 아닌 전체 데이터에서 파손 유형 클래스별로 동일한 비율로 **총 12,000장 추출**
+* (4th)기존 damaged 데이터를 AI-HUB 샘플 1,200장이 아닌 전체 데이터(50만장)에서 파손 유형 클래스별로 동일한 비율로 **총 12,000장 추출**
 
 | Class (Category) | Source | Images | Labels | Note |
 | :--- | :--- | :--- | :--- | :--- |
@@ -75,9 +75,9 @@
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
 * (추가) normal 데이터셋을 추가하여 아주 소폭 accuracy 하락
 
-| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** | **Fine-tuned. ver4.0** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) | ![Fine-tuned4](./results/01_detection/confusion_matrix_fine_tuning_4th.png) |
+| **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** | **Fine-tuned. ver4.0** |**Fine-tuned. ver5.0** |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![Baseline](./results/01_detection/confusion_matrix_010.png) | ![Fine-tuned](./results/01_detection/confusion_matrix_fine_tuning_1st.png) | ![Fine-tuned2](./results/01_detection/confusion_matrix_fine_tuning_2nd.png) | ![Fine-tuned3](./results/01_detection/confusion_matrix_fine_tuning_3rd.png) | ![Fine-tuned4](./results/01_detection/confusion_matrix_fine_tuning_4th.png) | ![Fine-tuned5](./results/01_detection/confusion_matrix_fine_tuning_5th.png) |
 
 | Model | Class | Precision | Recall | f1 | 
 | :---: | :---: | :---: | :---: | :--- | 
@@ -91,6 +91,8 @@
 | **Fine-tuned. ver3.0** |Vehicle| 0.99 | 0.99 | 0.99 | 
 | **Fine-tuned. ver4.0** |Non-Vehicle| 0.94 | 0.95 | 0.94 |
 | **Fine-tuned. ver4.0** |Vehicle| 0.99 | 0.98 | 0.98 | 
+| **Fine-tuned. ver5.0** |Non-Vehicle| 0.86 | 0.95 | 0.90 |
+| **Fine-tuned. ver5.0** |Vehicle| 1.00 | 0.99 | 0.99 | 
 
 | **model results** | 
 | :---: | 
@@ -98,20 +100,13 @@
 
 | **valid sample** | 
 | :---: | 
-| ![valid sample](./results/02_train_results/val_batch0_pred.jpg) | 
+| ![valid sample](./results/02_train_results/val_batch2_pred.jpg) | 
 
 ## 원인 추정(1st 문제점 해결 여부)
 - fine-tuning 1st 모델의 성능이 향상하지 못 했던 원인은 **학습 데이터 간의 "정답 기준"이 서로 다르기 때문**일 가능성으로 추정
 - 이미지 시각화 결과, labeling 문제를 하이브리드 전략으로 개선한 것으로 확인
     - GT : 차량 파손 부위 일부를 라벨링
     - predicted : 차량 전체 향상을 라벨링
-
-## fine-tuning 2nd
- - 오탐 5개 중 damaged images(2) 중 이미지가 뒤집혔거나, 파손 부위가 확대된 차량 이미지를 인식하지 못함
-
-| **false samples** | 
-| :---: |
-| <img src="./results/01_detection/2nd_false_sample.png" width="50%"> |
 
 ## fine-tuning 3rd
    1) 해상도 증가하여 미세한 부위 명확히 구분
@@ -124,10 +119,14 @@
 ## fine-tuning 4th
   - kaggle 데이터셋 추가
   - 오탐 7개 : FN(4) + FP(3)
+
+## fine-tuning 5th
+  - kaggle 데이터셋 추가
+  - 오탐 12개 : FN(9) + FP(3)
    
 | **false samples** | 
 | :---: |
-| <img src="./results/01_detection/4th_false_sample.png" width="50%"> |
+| <img src="./results/01_detection/5th_false_sample.png" width="50%"> |
    
 
 ## 📝 Conclusion 
