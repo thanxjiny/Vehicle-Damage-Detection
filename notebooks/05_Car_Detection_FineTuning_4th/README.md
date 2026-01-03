@@ -1,16 +1,17 @@
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/03_Car_Detection_FineTuning_3rd/5_study1_yolov8x_fine_tuning_4th_kaggle_dataset.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/05_Car_Detection_FineTuning_4th/6_study1_yolov8_fine_tuning_aihub.ipynb)
 
-# 🚀 Step 4. YOLOv8x Fine-tuning (3rd Attempt)
+# 🚀 Step 5. YOLOv8x Fine-tuning (4th Attempt)
 
 * 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
-* 기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
+* (3rd)기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
+* (4th)기존 damaged 데이터를 샘플 1,200장이 아닌 전체 데이터에서 파손 유형 클래스별로 동일한 비율로 총 1,2000장 추출
 
 | Class (Category) | Source | Images | Labels | Note |
 | :--- | :--- | :--- | :--- | :--- |
-| **1. Damaged** | AI-Hub | **1,200** | 1,200 | 차량 파손 이미지 (Training Target) |
-| **2. Normal** | COCO 2017+kaggle | **1,077** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) + kaggle normal data |
-| **3. Background** | COCO 2017 | **600** | - | 차량 없음 (Negative Samples) |
-| **Total** | | **2,877** | | **✅ 구축 완료** |
+| **1. Damaged** | AI-Hub | **12,000** | 12,000 | 차량 파손 이미지 (Training Target) |
+| **2. Normal** | COCO 2017+kaggle | **938** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) + kaggle normal data |
+| **3. Background** | COCO 2017 | **611** | - | 차량 없음 (Negative Samples) |
+| **Total** | | **13,549** | | **✅ 구축 완료** |
 
 ## 🎯 Objective (실험 목표)
 1.  **Domain Adaptation:** 일반적인 COCO 데이터셋뿐만 아니라, **심하게 파손된 차량(Damaged Car)** 데이터 분포에 모델을 적응시킴
@@ -19,7 +20,7 @@
 
 ## 🛠 Experiment Setup (학습 환경)
 * **Model:** YOLOv8x (Load weights from `yolov8x.pt`)
-* **Environment:** Google Colab Pro (A100 / T4 GPU)
+* **Environment:** Google Colab Pro (L4)
 
 ## Dataset
 1. 데이터셋 구축 및 표준화 (Dataset Construction & Standardization)
@@ -38,12 +39,12 @@
     - Val (20%): 학습 중 성능 모니터링 및 조기 종료(Early Stopping) 결정용.
     - Test (10%): 학습 과정에 절대 관여하지 않으며, 최종 성능 평가에만 사용
   
-| class | count | ratio | 
-| :---: | :---: | :---: | 
-| Train | 2,013 | 0.7 |
-| Valid | 576 | 0.2 | 
-| Test | 288 | 0.1 |  
-| total | 2,877 | 1.0 | 
+| class | count | ratio |backgroud | 
+| :---: | :---: | :---: | :---: | 
+| Train | 9,543 | 0.7 |441|
+| Valid | 2,690 | 0.2 |111| 
+| Test | 1,316 | 0.1 |59|  
+| total | 13,549 | 1.0 | 611(4.5%)|
 
 ### ⚙️ Hyperparameters
 | Parameter | Value | Note |
@@ -52,9 +53,9 @@
 | **Batch Size** | 16 | GPU 메모리에 맞춰 조정 |
 | **Img Size** | 640 | YOLOv8 기본 입력 크기 |
 | **freeze** | 10 | pre-trained 모델의 back-bone 유지 |
-| **Lr0** | 1e-5 | Initial Learning Rate.초기학습률. 이미 학습이 잘 된 모델이니 조금씩 수 |
+| **Lr0** | 1e-4 | Initial Learning Rate.초기학습률. 이미 학습이 잘 된 모델이니 조금씩 수 |
 | **Optimizer** | SGD / AdamW |학습 속도가 빠르고 설정에 덜 민감(Yolov8 기본) |
-| **patience** | 15 |early-stopping 조절. 성능이 더 이상 좋아지지 않을때, epoch반복 |
+| **patience** | 10 |early-stopping 조절. 성능이 더 이상 좋아지지 않을때, epoch반복 |
 
 ## 📊 Training Results (학습 결과)
 학습 완료 후 `model.val()`을 통해 얻은 최종 성능 지표입니다.
@@ -68,6 +69,7 @@
 | **Fine-tuned. ver2.0** | yolo v8x|97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
 | **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
 | **Fine-tuned. ver4.0** | yolo v8x|97.57%| 14.35 ms/장 | 69.69 FPS |L4|288 | 7 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 0 + kaggle dataset|
+| **Fine-tuned. ver5.0** | yolo v8x|99.09%| 15.25 ms/장 | 65.59 FPS |L4|1316 | 12 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 + kaggle dataset + AI-HUB 12000(conf=0.10)|
 
 ### 💡 Findings
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
