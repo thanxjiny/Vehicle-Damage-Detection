@@ -24,9 +24,6 @@
 | **Damage Detection** | **Step 1** | 파손 인식 파인튜닝_1st | YOLOv8 Custom | ✅ Done | [상세보기](./notebooks/05_Damage_Detection_FineTuning_1st/README.md) | |
 | **Damage Detection** | **Step 2** | 파손 인식 파인튜닝_2nd | YOLOv8 Custom | ✅ Done | [상세보기](./notebooks/06_Damage_Detection_FineTuning_2nd/README.md) | |
 
-notebooks/00_Data_Prepration_ver2(damage12000)
-
-
 
 ## Tech Stack
 * Python 3.10
