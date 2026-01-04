@@ -72,8 +72,9 @@
 | **Fine-tuned. ver5.0** | yolo v8x|99.64%| 15.05 ms/장 | 66.42 FPS |L4|1397 | 5 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 + kaggle dataset + AI-HUB 12000(conf=0.10)|
 
 ### 💡 Findings
-* fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
-* (추가) normal 데이터셋을 추가하여 아주 소폭 accuracy 하락
+* fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 99.64%)하였고, 특히 FN는 줄고, TP가 상승하였다.
+* (추가) normal 데이터 (kaggle)
+* (변경) damaged 데이터, 12,000장 직접 샘플 추출
 
 | **Baseline (pre-trained)** | **Fine-tuned. ver1.0** | **Fine-tuned. ver2.0** | **Fine-tuned. ver3.0** | **Fine-tuned. ver4.0** |**Fine-tuned. ver5.0** |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -132,6 +133,7 @@
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략과 kaggle의 데이터셋을 추가하여여 모델의 정확도를 비약적으로 상승시킴
+
 
 
 
