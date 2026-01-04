@@ -74,27 +74,31 @@ AI_HUB_DAMAGE_DATASET/
 
 #### 4차. 최종 데이터셋 정리
 * 파손 데이터(AI-Hub)와 정상 차량(Normal), 그리고 오탐율을 줄이기 위한 배경 데이터(Background)를 결합하여 통합 차량 탐지 모델용 데이터셋을 생성
+* YOLO v8x 모델이 자동 라벨링 시도 시, confidence threshold 0.1로 적용하여 최대한 차량을 인식하도록 유도
 
 **하이브리드 라벨링 전략**
 | 데이터소스 |  적용 전략 |수 | 설명 |
 | :--- | :--- | :--- | :--- |
 | **Damaged (AI-Hub)** | Hybrid| 12000| 1차로 YOLO v8x 모델이 자동 라벨링 시도, 실패 시 기존 원본 TXT 라벨을 차량(0) 클래스로 변환하여 보완 |
-| **Normal (COCO2017 + Kaggle)** |Auto | 938| 사전 학습된 YOLO v8x 모델을 활용하여 이미지 내 차량 객체를 자동으로 탐지 및 라벨링 |
-| **Background(COCO2017)** | Empty |611(4.5%)|  차량이 없는 배경 이미지를 'Empty Label'로 처리하여 FP(False Positive) 오류 감소 유도, 최초 normal이지만 YOLO v8x가 차량으로 인지하지 못한 11개 포함 |
-|**전체**|-| 13,549 |-|  
+| **Normal (COCO2017 + Kaggle)** |Auto | 1072| 사전 학습된 YOLO v8x 모델을 활용하여 이미지 내 차량 객체를 자동으로 탐지 및 라벨링 |
+| **Background(COCO2017)** | Empty | 605|  차량이 없는 배경 이미지를 'Empty Label'로 처리 |
+|**전체**|-| 13,677 |-|  
+ * Normal에서 Yolo v8x를 통해 차량으로 인식되지 못한 5개 Backgroud 적용
+ * Normal = 157 + 920 - 5
+ * Background 605(4.4%)
 
 `6_study1_yolov8_fine_tuning_aihub.ipynb` 코드 수행
 
 ```text
-CAR_DETECTION_AIHUB_KAGGLE/
+CAR_DETECTION_AIHUB_KAGGLE_CONF01/ (전체/Background)
 ├── images/
-│   ├── train/ (9,543)
-│   └── val/   (2,690)
-│   └── test/  (1,316)
+│   ├── train/ (9,473 / 447)
+│   └── val/   (2,807 /  98)
+│   └── test/  (1,397 /  60) 
 └── labels/
-│   ├── train/ (9,543 txt 파일)
-│   └── val/   (2,690 txt 파일)
-│   └── test/  (1,316 txt 파일)
+│   ├── train/ (9,473 txt 파일)
+│   └── val/   (2,807 txt 파일)
+│   └── test/  (1,397 txt 파일)
 ```
 
 
