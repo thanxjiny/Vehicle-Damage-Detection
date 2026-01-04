@@ -96,9 +96,9 @@ CAR_DETECTION_AIHUB_KAGGLE_CONF01/ (전체/Background)
 │   └── val/   (2,807 /  98)
 │   └── test/  (1,397 /  60) 
 └── labels/
-│   ├── train/ (9,473 txt 파일)
-│   └── val/   (2,807 txt 파일)
-│   └── test/  (1,397 txt 파일)
+    ├── train/ (9,473 txt 파일)
+    └── val/   (2,807 txt 파일)
+    └── test/  (1,397 txt 파일)
 ```
 
 
