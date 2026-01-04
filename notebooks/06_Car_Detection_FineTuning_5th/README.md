@@ -1,6 +1,6 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/05_Car_Detection_FineTuning_4th/6_study1_yolov8_fine_tuning_aihub.ipynb)
 
-# 🚀 Step 5. YOLOv8x Fine-tuning (4th Attempt)
+# 🚀 Step 6. YOLOv8x Fine-tuning (5th Attempt)
 
 * 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
 * (3rd)기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
@@ -131,4 +131,5 @@
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략과 kaggle의 데이터셋을 추가하여여 모델의 정확도를 비약적으로 상승시킴
+
 
