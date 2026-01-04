@@ -122,7 +122,7 @@
 
 ## fine-tuning 5th
   - kaggle 데이터셋 추가
-  - 오탐 12개 : FN(9) + FP(3)
+  - 오탐 5개 : FN(3) + FP(2)
    
 | **false samples** | 
 | :---: |
