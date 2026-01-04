@@ -122,7 +122,8 @@
 
 ## fine-tuning 5th
   - kaggle 데이터셋 추가
-  - 오탐 12개 : FN(9) + FP(3)
+  - Damaged AI-HUB 12,000장 적용
+  - 오탐 12개 : FN(3) + FP(2)
    
 | **false samples** | 
 | :---: |
@@ -131,5 +132,6 @@
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략과 kaggle의 데이터셋을 추가하여여 모델의 정확도를 비약적으로 상승시킴
+
 
 
