@@ -4,14 +4,14 @@
 
 * 베이스라인(Pre-trained) 성능을 넘어서기 위해, 커스텀 데이터셋(AI-Hub 파손 차량 + COCO)을 **YOLOv8x 모델을 이용해 Fine-tuning** 실행  
 * (3rd)기존 normal 데이터의 부족으로 인한 클래스 불균형을 **kaggle 데이터** 로 보충
-* (4th)기존 damaged 데이터를 AI-HUB 샘플 1,200장이 아닌 전체 데이터(50만장)에서 파손 유형 클래스별로 동일한 비율로 **총 12,000장 추출**
+* (5th)기존 damaged 데이터를 AI-HUB 샘플 1,200장이 아닌 전체 데이터(50만장)에서 파손 유형 클래스별로 동일한 비율로 **총 12,000장 추출**
 
 | Class (Category) | Source | Images | Labels | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | **1. Damaged** | AI-Hub | **12,000** | 12,000 | 차량 파손 이미지 (Training Target) |
-| **2. Normal** | COCO 2017+kaggle | **938** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) + kaggle normal data |
-| **3. Background** | COCO 2017 | **611** | - | 차량 없음 (Negative Samples) |
-| **Total** | | **13,549** | | **✅ 구축 완료** |
+| **2. Normal** | COCO 2017+kaggle | **1072** | - | 정상 차량 (면적 5% 이상 필터링 적용됨) + kaggle normal data |
+| **3. Background** | COCO 2017 | **605** | - | 차량 없음 (Negative Samples) |
+| **Total** | | **13,677** | | **✅ 구축 완료** |
 
 ## 🎯 Objective (실험 목표)
 1.  **Domain Adaptation:** 일반적인 COCO 데이터셋뿐만 아니라, **심하게 파손된 차량(Damaged Car)** 데이터 분포에 모델을 적응시킴
@@ -41,10 +41,10 @@
   
 | class | count | ratio |backgroud | 
 | :---: | :---: | :---: | :---: | 
-| Train | 9,543 | 0.7 |441|
-| Valid | 2,690 | 0.2 |111| 
-| Test | 1,316 | 0.1 |59|  
-| total | 13,549 | 1.0 | 611(4.5%)|
+| Train | 9,473 | 0.7 |447|
+| Valid | 2,807 | 0.2 |98| 
+| Test | 1,397 | 0.1 |60|  
+| total | 13,677 | 1.0 | 605(4.4%)|
 
 ### ⚙️ Hyperparameters
 | Parameter | Value | Note |
@@ -69,7 +69,7 @@
 | **Fine-tuned. ver2.0** | yolo v8x|97.45%| 20.12 ms/장 | 49.70 FPS |L4|196 | 5 | ver1.0 + hybrid labeling |
 | **Fine-tuned. ver3.0** | yolo v8m|98.47%| 22.98 ms/장 | 43.51 FPS |L4|196 | 3 | ver1.0 + hybrid labeling + IMG_SIZE 1024 + BATCH_SIZE 8 + close_mosaic 15|
 | **Fine-tuned. ver4.0** | yolo v8x|97.57%| 14.35 ms/장 | 69.69 FPS |L4|288 | 7 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 0 + kaggle dataset|
-| **Fine-tuned. ver5.0** | yolo v8x|99.09%| 15.25 ms/장 | 65.59 FPS |L4|1316 | 12 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 + kaggle dataset + AI-HUB 12000(conf=0.10)|
+| **Fine-tuned. ver5.0** | yolo v8x|99.64%| 15.05 ms/장 | 66.42 FPS |L4|1397 | 5 | ver1.0 + hybrid labeling + IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 + kaggle dataset + AI-HUB 12000(conf=0.10)|
 
 ### 💡 Findings
 * fine-tuning을 통해 Accuracy는 비약적으로 상승(88.71% > 98.47%)하였고, 특히 FN는 줄고, TP가 상승하였다.
@@ -91,8 +91,8 @@
 | **Fine-tuned. ver3.0** |Vehicle| 0.99 | 0.99 | 0.99 | 
 | **Fine-tuned. ver4.0** |Non-Vehicle| 0.94 | 0.95 | 0.94 |
 | **Fine-tuned. ver4.0** |Vehicle| 0.99 | 0.98 | 0.98 | 
-| **Fine-tuned. ver5.0** |Non-Vehicle| 0.86 | 0.95 | 0.90 |
-| **Fine-tuned. ver5.0** |Vehicle| 1.00 | 0.99 | 0.99 | 
+| **Fine-tuned. ver5.0** |Non-Vehicle| 0.95 | 0.97 | 0.96 |
+| **Fine-tuned. ver5.0** |Vehicle| 1.00 | 1.00 | 1.00 | 
 
 | **model results** | 
 | :---: | 
@@ -131,3 +131,4 @@
 
 ## 📝 Conclusion 
 * **결론:** 하이브리드 라벨링을 전략과 kaggle의 데이터셋을 추가하여여 모델의 정확도를 비약적으로 상승시킴
+
