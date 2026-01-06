@@ -36,15 +36,15 @@
 | Test | 1308 | 1200 |108|  
 | total | 13077 | 12000 |1077| 
 
-CAR_DAMAGE_DATASET_STAGE2_MULTI/
-├── images/
-│   ├── train/ (9153)
-│   └── val/   (2616)
-│   └── test/  (1308)
-└── labels/
-    ├── train/ (9153 txt 파일)
-    └── val/   (2616 txt 파일)
-    └── test/  (1308 txt 파일)
+CAR_DAMAGE_DATASET_STAGE2_MULTI/  
+├── images/  
+│   ├── train/ (9153)  
+│   └── val/   (2616)  
+│   └── test/  (1308)  
+└── labels/  
+    ├── train/ (9153 txt 파일)  
+    └── val/   (2616 txt 파일)  
+    └── test/  (1308 txt 파일)  
 
 | **dataset samples(crop images) ** | 
 | :---: |
