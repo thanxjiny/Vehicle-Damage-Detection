@@ -1,59 +1,78 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/04_Damage_Detection_FineTuning_1st/1_study2_yolov8_class_all.ipynb)
 
-# 🚀 차량 파손 탐지((Car Damage Detection)
-차량 이미지에서 파손 여부 및 파손 부위를 탐지하는 AI 모델 개발. 기존에 학습된 **차량 탐지 모델(Study 1)** 을 전처리기(Preprocessor)로 활용하여, 차량 영역을 크롭(Crop)한 뒤 파손을 탐지하는 2-Stage Pipeline을 구축
+# 차량 파손 유형 분류 (Damage Categorization)
+* 탐지된 차량의 파손 부위를 크롭(Crop)하여 파손의 종류를 정밀하게 분류하는 Stage 2 분류 모델 구축
+* 데이터 불균형 문제와 실제 활용을 감안하여 계층적 평가 지표(Major/Minor)를 도입
 
-## 🎯 Objective (실험 목표)
-1. **Goal** : 차량 이미지에서 파손된 부위(Damage)를 정확하게 탐지하고, 정상 차량과 파손 차량을 분류.
-2. **Model** : YOLOv8 (Ultralytics)
-3. **Strategy** :
-   - Stage 1 (Preprocessing): 1차 모델을 이용해 차량 위치(BBox) 식별 및 Crop
-   - Stage 2 (Detection): Crop된 차량 이미지 내에서 파손 부위 탐지.
-4. **Data Strategy** :
-   - Positive Sample (Damaged)과 Negative Sample (Normal)을 모두 활용하여 오탐(False Positive) 방지 학습
-   - 파손 클래스 통합 (Scratched, Dented 등 -> Damage 단일 클래스)
-     
-## Experiment Setup (학습 환경)
-* **Model:** YOLOv8 
-* **Environment:** Google Colab Pro (A100 / T4 GPU)
+## 데이터셋 구축 과정 (Data Preprocessing)
+ - Stage1(Car Detection) 결과를 활용하여 전처
+1.Stage 1 기반 Crop 데이터 생성
+* 핵심 로직: Stage 1 모델이 탐지한 차량의 Bounding Box 영역을 원본 이미지에서 크롭하여 사용
+  - yolov8x_fine_tuning_5th, confidence threshold = 0.1 적용
+  - 동일 이미지에 복수의 box 탐지 시, 가장 큰 box(차량) 선택
+  - 만약 차량 이미지를 탐지하지 못 하면, 이미지 전체를 그대로 선
+* 좌표 변환: 원본 이미지의 파손 위치 JSON 데이터를 크롭된 이미지의 상대 좌표로 재계산하여 정확한 학습 영역을 지정
+  
+2. 클래스 매핑 및 통합
+* 데이터의 특성에 맞춰 유사 클래스를 통합하고 ID를 부여합니다.
+   - Class 0 (Scratched): 긁힘, 스크래치
+   - Class 1 (Separated): 이격, 벌어짐
+   - Class 2 (Breakage): 파손, 깨짐
+   - Class 3 (Crushed): 찌그러짐 (Dent, Dented 포함)
 
-## 🛠 Workflow
+3. 데이터 밸런싱 (Balancing)
+* AI-HUB(50만장)에서 학습용(Train) 2,500장, 검증용(Val) 500장씩 클래스별로 균등하게 수집하여 특정 파손 유형에 모델이 편향되지 않도록 설계
 
-1. Data Preparation
-  - Source: AI Hub + coco data
-  - Input Structure:
-    - Damaged: 파손 차량 이미지 + JSON 라벨 (Global Coordinates)
-    - Normal: 정상 차량 이미지 (No Labels)
+4. DATA Split
+* Damaged와 Nomal을 각각 train:val:test = 7:2:1로 분
+- Damaged: 12000
+- Normal : 1077
+- CAR_DAMAGE_DATASET_STAGE2_MULTI
 
-2. Preprocessing (Coordinate Remapping)
-  - 1단계 차량 탐지 모델(yolov8m_fine_tuning_3rd.pt)을 활용하여 학습 데이터를 생성
-    1) Vehicle Detection: 원본 이미지에서 차량의 Bounding Box를 검출
-    2) Crop with Margin: **파손 부위 소실을 방지하기 위해 BBox에 15% Margin을 적용** 하여 이미지 Crop
-    3) Coordinate Remapping:
-      - 원본 JSON의 파손 좌표(Global)를 Crop 이미지 기준(Local)으로 변환.
-      - Crop 영역을 벗어나는 좌표에 대해 **Clamp(보정)** 로직 적용.
-    4) Dataset Split: Train (70%) : Val (20%) : Test (10%) 무작위 분할.
+| split | total | Damaged | Normal | 
+| :---: | :---: | :---: |  :---: | 
+| Train | 9153 | 8400 |753|
+| Valid | 2616 | 2400 |216| 
+| Test | 1308 | 1200 |108|  
+| total | 13077 | 12000 |1077| 
 
-| **dataset samples** | 
+CAR_DAMAGE_DATASET_STAGE2_MULTI/
+├── images/
+│   ├── train/ (9153)
+│   └── val/   (2616)
+│   └── test/  (1308)
+└── labels/
+    ├── train/ (9153 txt 파일)
+    └── val/   (2616 txt 파일)
+    └── test/  (1308 txt 파일)
+
+| **dataset samples(crop images) ** | 
 | :---: |
 | <img src="./results/01_detection/car_damage_dataset_sample.png" width="100%"> |
 
 
+| **dataset samples(원본 vs Crop 비교)** | 
+| :---: |
+| <img src="./results/01_detection/car_damage_dataset_comparison_sample.png" width="100%"> |
 
-3. Model Training
-  - Base Model: yolov8x.pt / yolov8m.pt (Fine-tuning)
-  - Configuration:
-  - Epochs: 50~100
-  - Image Size: 640 ~ 1024
-  - Optimizer: AdamW
-  - Augmentation: Mosaic (마지막 Epoch에서 비활성화)
-  
-| class | count | ratio | 
-| :---: | :---: | :---: | 
-| Train | 949 | 0.7 |
-| Valid | 272 | 0.2 | 
-| Test | 136 | 0.1 |  
-| total | 1357 | 1.0 | 
+## 모델 학습 및 최적화
+* Architecture: YOLOv8 Classification/Detection 기반 커스텀 모델
+* Training Strategy:
+   - Mixed Precision Training: 연산 속도 향상 및 메모리 효율화 적용
+   - Auto-Clicker: Colab 환경에서의 세션 유지 스크립트 활용
+   - Data Split: Train(70%) / Val(20%) / Test(10%) 무작위 분할을 통한 엄격한 검증
+
+## 모델 평가 방법 (Evaluation Metrics)
+* 실무적 관점에서의 **계층적 평가(Hierarchical Evaluation)** 를 수행
+
+1) 계층적 그룹화 (Major vs Minor): 파손의 심각도에 따라 두 그룹으로 나누어 성능을 별도 관리
+ - Major Group (심각): Breakage, Crushed, Separated (수리가 시급하거나 부품 교체가 필요한 경우)
+ - Minor Group (경미): Scratched(외관상의 문제 위주)
+
+2) 주요 지표
+ - mAP50: 모든 클래스에 대한 평균 정밀도 평가
+ - Confusion Matrix: 클래스 간 혼동 행렬 분석 (특히 Major 클래스를 Minor로 오판하는 Case 집중 분석)
+ - Group Accuracy: Major 그룹과 Minor 그룹 각각의 탐지 성공률 측정
 
 ## 📊 Performance Evaluation (test set)
 
