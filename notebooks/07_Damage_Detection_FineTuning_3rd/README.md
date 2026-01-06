@@ -62,27 +62,7 @@
 | **Fine-tuned. ver1.0** | yolo v8m|0.25|85.55%| 11.71 ms/장 | 85.41 FPS |L4|1308 | 189 |0.286|0.133| IMG_SIZE 640 + BATCH_SIZE 32 + close_mosaic 10 |
 | **Fine-tuned. ver1.0** | yolo v8m|0.10|97.02%| 11.71 ms/장 | 84.97 FPS |L4|1308 | 39 |0.286|0.133| IMG_SIZE 640 + BATCH_SIZE 32 + close_mosaic 10 |
 | **Fine-tuned. ver2.0** | yolo v8x|0.25|91.67%| 18.48 ms/장 | 54.11 FPS |L4|1308 | 109 |0.303|0.142| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver2.0** | yolo v8x|0.10|97.09%| 18.64 ms/장 | 53.66 FPS |L4|1308 | 38 |0.303|0.142| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-
-### 💡 Findings
-* fine-tuning과 inference confidence threshold 조정을 통해 Accuracy는 비약적으로 상승(85.55% > 97.9%)
-* 동일하게 confidence 0.1 기준, yolo v8m과 v8x의 성능 차이는 거의 없음(속도는 v8m 우수)
-
-| **Fine-tuned. ver1.0(0.25)** | **Fine-tuned. ver1.0(0.1)** | **Fine-tuned. ver2.0(0.25)** | **Fine-tuned. ver2.0(0.1)** |
-| :---: | :---: | :---: | :---: |
-| ![v1+0.25](./results/01_detection/confusion_matrix_fine_tuning_1st_025.png) | ![v1+0.10](./results/01_detection/confusion_matrix_fine_tuning_1st_010.png) | ![v2+0.25](./results/01_detection/confusion_matrix_fine_tuning_2nd_025.png) | ![v2+0.10](./results/01_detection/confusion_matrix_fine_tuning_2nd_010.png) |
-
-| Model | Class | Precision | Recall | f1 | 
-| :---: | :---: | :---: | :---: | :--- |  
-| **Fine-tuned. ver1.0** |Non-Vehicle| 0.79 | 0.88 | 0.83 |  
-| **Fine-tuned. ver1.0** |Vehicle| 0.99 | 0.98 | 0.98 | 
-| **Fine-tuned. ver2.0** |Non-Vehicle| 0.78 | 0.92 | 0.84 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.99 | 0.98 | 0.98 | 
-
-
-## 🛠 오탐 대상 
- - ver2.0의 confidence threhold 0.1 기준 총 6개의 오탐
- - damaged(2), normal(4)
+| **Fine-tuned. ver2.0** | yolo v8x|0.10|97.09%| 18.64 ms/장 | 53.66 FPS |L4|1308 | 38 |0.303|0.142| IMG_SIZE 640 + BATCH_SIZE 16 + clo상
 
 | **false samples** | 
 | :---: |
