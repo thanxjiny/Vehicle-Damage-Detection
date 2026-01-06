@@ -24,7 +24,7 @@
 | **Car Detection** | **Step 5** | 차량 인식 파인튜닝_4th | YOLOv8 | - 삭제 - |  | |
 | **Car Detection** | **Step 6** | 차량 인식 파인튜닝_5th | YOLOv8 (12000) | ✅ Done | [상세보기](./notebooks/06_Car_Detection_FineTuning_5th/README.md) | |
 | **Damage Detection** | **Step 1** | 파손 인식 파인튜닝_1st | YOLOv8 | ✅ Done | [상세보기](./notebooks/05_Damage_Detection_FineTuning_1st/README.md) | |
-| **Damage Detection** | **Step 2** | 파손 인식 파인튜닝_2nd | YOLOv8 | ✅ Done | [상세보기](./notebooks/06_Damage_Detection_FineTuning_2nd/README.md) | |
+| **Damage Detection** | **Step 2** | 파손 인식 파인튜닝_2nd | YOLOv8 (+normal 920) | ✅ Done | [상세보기](./notebooks/06_Damage_Detection_FineTuning_2nd/README.md) | |
 | **Damage Detection** | **Step 3** | 파손 인식 파인튜닝_3rd | YOLOv8 (12000) | ✅ Done | [상세보기](./notebooks/07_Damage_Detection_FineTuning_3rd/README.md) | |
 | **Damage Classification** | **Step 1** | 파손 인식 파인튜닝_1st | YOLOv8 Custom | ✅ Done | [상세보기](./notebooks/08_Damage_Classification_FineTuning_1st/README.md) | |
 
