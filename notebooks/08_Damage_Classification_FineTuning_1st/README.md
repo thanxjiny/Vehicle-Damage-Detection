@@ -127,19 +127,19 @@ Separated |  3,000 |이격, 벌어짐|
 | :---: | :---: | 
 | ![v1+0.25](./results/01_detection/confusion_matrix_fine_tuning_1st_025.png) | ![v1+0.10](./results/01_detection/confusion_matrix_fine_tuning_1st_010.png) |
 
-| actual |pred | target | miss | ratio |-|
-| :---: | :---: | :---: | :---: | :--- |  
+| actual |pred | target | miss | ratio |설명|
+| :---: | :---: | :---: | :---: | :---: |  :---:| 
 | major | minor or normal | 1002 | 102 | 0.101|major miss|
 | minor | major | 1003 | 95 | 0.0947|minor miss|
 
 ## 오탐 대상 시각화 
 
-| **critical miss** | 
+| **major miss** | 
 | :---: |
-| <img src="./results/01_detection/critical miss.png" width="50%"> |
+| <img src="./results/01_detection/critical miss.png" width="100%"> |
 
 | **minor miss** | 
 | :---: |
-| <img src="./results/01_detection/minor miss.png" width="50%"> |
+| <img src="./results/01_detection/minor miss.png" width="100%"> |
 
 
