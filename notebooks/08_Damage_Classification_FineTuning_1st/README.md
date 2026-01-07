@@ -4,8 +4,8 @@
 * 탐지된 차량의 파손 부위를 크롭(Crop)하여 파손의 종류를 정밀하게 분류하는 Stage2 분류 모델 구축
 * 데이터 불균형 문제와 실제 활용을 감안하여 계층적 평가 지표(Major/Minor)를 도입
 
-## 데이터셋 구축 과정 (Data Preprocessing)
-### 1.Stage 1(Car Detection) 결과를 활용하여 전처리
+## 1. 데이터셋 구축 과정 (Data Preprocessing)
+### 1) Stage 1(Car Detection) 결과를 활용하여 전처리
 - Stage1 모델이 탐지한 차량의 Bounding Box 영역을 원본 이미지에서 crop하여 차량 외 불필요한 배경 제거
   - yolov8x_fine_tuning_5th, confidence threshold = 0.1 적용
   - 동일 이미지에 복수의 box 탐지 시, 가장 큰 box(차량) 선택
@@ -16,7 +16,7 @@
 | :---: |
 | <img src="./results/01_detection/car_damage_dataset_sample_comparison.png" width="100%"> |
   
-### 2. 데이터 밸런싱 (Balancing)
+### 2) 데이터 밸런싱 (Balancing)
 * AI-HUB(50만장)에서 학습용(Train) 2,500장, 검증용(Val) 500장씩 클래스별로 균등하게 수집하여 특정 파손 유형에 모델이 편향되지 않도록 설계
  
 | ID | Class | Images | 설명 |
@@ -36,7 +36,7 @@ AI_HUB_DAMAGE_DATASET/
     └── val/   (2,000개 .txt)
 ```
 
-### 3. DATA Split
+### 3) DATA Split
 - Damaged와 Nomal을 Train(70%) / Val(20%) / Test(10%) 무작위 분할을 통한 엄격한 검증
   - Damaged: 12,000 (파손 라벨 있음 / AI-HUB 라벨링 정보 활용)
   - Normal : 1,077 (파손 라벨 없음 / coco 2017 157장 + kaggle dataset 920장)
@@ -65,7 +65,7 @@ CAR_DAMAGE_DATASET_STAGE2_MULTI/
 | :---: |
 | <img src="./results/01_detection/car_damage_dataset_sample.png" width="100%"> |
 
-## 모델 학습 및 최적화
+## 2. 모델 학습 및 최적화
 - Architecture: YOLOv8 Classification/Detection 기반 커스텀 모델
 - Hyperparameter Tuning
 
@@ -77,7 +77,7 @@ CAR_DAMAGE_DATASET_STAGE2_MULTI/
 | **ingle_cls=False** | Multi-Class Detection |단순히 '파손 여부'만 판단하는 것이 아니라 파손 유형을 분|
 | **close_mosaic=10** | Mosaic Augmentation Control  | 학습 초기에는 이미지 4장을 합치는 Mosaic 증강을 사용하여 작은 물체 탐지 능력을 키우고, 종료 10 Epoch 전부터는 이 기능을 끔|
 
-### Mosaic Augmentation
+### [참고] Mosaic Augmentation
  - 서로 다른 4장의 이미지를 랜덤하게 잘라서 1장의 이미지로 합치는 기술
  - [장점]
    - 이미지가 축소되어 합쳐지기 때문에, 모델은 평소보다 더 멀리 있는(작은) 물체를 찾는 법을 학습
@@ -90,55 +90,56 @@ CAR_DAMAGE_DATASET_STAGE2_MULTI/
 
 | **dataset samples(crop images)** | 
 | :---: |
-| <img src="./ref/augmentation_mosaic_on.avif" width="100%"> |
+| <img src="./ref/augmentation_mosaic_on.avif" width="50%"> |
 
+Separated |  3,000 |이격, 벌어짐|
+| **2** | Breakage |  3,000 |파손, 깨짐|
+| **3** | Crushed
 
-## 모델 평가 방법 (Evaluation Metrics)
-* 실무적 관점에서의 **계층적 평가(Hierarchical Evaluation)** 를 수행
-
-1) 계층적 그룹화 (Major vs Minor): 파손의 심각도에 따라 두 그룹으로 나누어 성능을 별도 관리
- - Major Group (심각): Breakage, Crushed, Separated (수리가 시급하거나 부품 교체가 필요한 경우)
+## 3. 모델 평가 방법 (Evaluation Metrics)
+- 한계. 기존 라벨링이 Scratched를 제외하고, 나머지 Separated, Breakage, Crushed 경계가 모호
+- 활용 관점에서의 **계층적 평가(Hierarchical Evaluation)** 를 수행
+ 
+### 1) 계층적 그룹화 (Major vs Minor): 파손의 심각도에 따라 두 그룹으로 나누어 성능을 별도 관리
+ - Major Group (심각): Breakage, Crushed, Separated
+   - claim : 수리가 시급하거나 부품 교체가 필요한 경우
+   - UW : 파손이 심각하여 인수 거절 대상
  - Minor Group (경미): Scratched(외관상의 문제 위주)
 
-2) 주요 지표
+### 2) 주요 지표
  - mAP50: 모든 클래스에 대한 평균 정밀도 평가
- - Confusion Matrix: 클래스 간 혼동 행렬 분석 (특히 Major 클래스를 Minor로 오판하는 Case 집중 분석)
+ - Confusion Matrix: 클래스 간 혼동 행렬 분석 (**Major 클래스를 Minor로 오판하는 Case 집중 분석**)
  - Group Accuracy: Major 그룹과 Minor 그룹 각각의 탐지 성공률 측정
 
-## 📊 Performance Evaluation (test set)
+## Performance Evaluation (test set)
 
-### 1. Metrics Comparison (파인튜닝 1st vs 파인튜닝 2nd * inference confidence threshold)
+### 1. Metrics Comparison (inference confidence threshold)
 
-| Class | Model | Confidence score | Accuracy | average inference speed | FPS | GPU | test | fail |mAP50|mAP50-95|비고 |
-| :---: | :---: |:---: | :---: | :---: | :---: |:---: | :---: |:---: |:---: |:---: |:---: |
-| **Fine-tuned. ver1.0** | yolo v8m|0.25|85.29%| 11.06 ms/장 | 90.43 FPS |A100|136 | 20 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver1.0** | yolo v8m|0.10|90.44%| 11.04 ms/장 | 90.55 FPS |A100|136 | 13 |0.4011|0.2608| IMG_SIZE 640 + BATCH_SIZE 16 + close_mosaic 10 |
-| **Fine-tuned. ver2.0** | yolo v8x|0.25|92.65%| 21.81 ms/장 | 45.85 FPS |A100|136 | 10 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
-| **Fine-tuned. ver2.0** | yolo v8x|0.10|95.59%| 22.27 ms/장 | 44.09 FPS |A100|136 | 6 |0.4404|0.3128| IMG_SIZE 1024 + BATCH_SIZE 16 + close_mosaic 15 |
+| conf | Model | Overall Accuracy | average inference speed | FPS | GPU |mAP50|mAP50-95|test|fail|
+| :---: | :---: |:---: | :---: | :---: | :---: |:---: | :---: |:---: | :---: |
+| **0.25** | yolo v8x|73.24%| 70.90 ms/장 | 14.10 FPS |T4|0.261|0.124|1308|337|
+| **0.10** | yolo v8x|83.56%| 71.08 ms/장 | 14.07 FPS |T4|0.261|0.124|1308|215|
 
-### 💡 Findings
-* fine-tuning과 inference confidence threshold 조정을 통해 Accuracy는 비약적으로 상승(85.29% > 95.59%)
+### 2. Result
+* fine-tuning과 inference confidence threshold 조정을 통해 overall accuracy 상승(73.24% > 83.56%)
 
-| **Fine-tuned. ver1.0(0.25)** | **Fine-tuned. ver1.0(0.1)** | **Fine-tuned. ver2.0(0.25)** | **Fine-tuned. ver2.0(0.1)** |
-| :---: | :---: | :---: | :---: |
-| ![v1+0.25](./results/01_detection/confusion_matrix_fine_tuning_1st_025.png) | ![v1+0.10](./results/01_detection/confusion_matrix_fine_tuning_1st_010.png) | ![v2+0.25](./results/01_detection/confusion_matrix_fine_tuning_2nd_025.png) | ![v2+0.10](./results/01_detection/confusion_matrix_fine_tuning_2nd_010.png) |
+| **Fine-tuned. ver1.0(0.25)** | **Fine-tuned. ver1.0(0.1)** | 
+| :---: | :---: | 
+| ![v1+0.25](./results/01_detection/confusion_matrix_fine_tuning_1st_025.png) | ![v1+0.10](./results/01_detection/confusion_matrix_fine_tuning_1st_010.png) |
 
-| Model | Class | Precision | Recall | f1 | 
+| actual |pred | target | miss | ratio |-|
 | :---: | :---: | :---: | :---: | :--- |  
-| **Fine-tuned. ver1.0** |Non-Vehicle| 0.62 | 0.59 | 0.61 |  
-| **Fine-tuned. ver1.0** |Vehicle| 0.94 | 0.95 | 0.95 | 
-| **Fine-tuned. ver2.0** |Non-Vehicle| 0.87 | 0.76 | 0.81 |
-| **Fine-tuned. ver2.0** |Vehicle| 0.97 | 0.98 | 0.97 | 
+| major | minor or normal | 1002 | 102 | 0.101|major miss|
+| minor | major | 1003 | 95 | 0.0947|minor miss|
 
+## 오탐 대상 시각화 
 
-## 🛠 오탐 대상 
- - ver2.0의 confidence threhold 0.1 기준 총 6개의 오탐
- - damaged(2), normal(4)
-
-| **false samples** | 
+| **critical miss** | 
 | :---: |
-| <img src="./results/01_detection/false_samples.png" width="50%"> |
+| <img src="./results/01_detection/critical miss.png" width="50%"> |
+
+| **minor miss** | 
+| :---: |
+| <img src="./results/01_detection/minor miss.png" width="50%"> |
 
 
-## 📝 Conclusion 
-* **결론:** Fine-tuning을 통해 모델의 정확도를 비약적으로 상승시킴(95.59%)
