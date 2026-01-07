@@ -1,17 +1,20 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/04_Damage_Detection_FineTuning_1st/1_study2_yolov8_class_all.ipynb)
 
 # 차량 파손 유형 분류 (Damage Categorization)
-* 탐지된 차량의 파손 부위를 크롭(Crop)하여 파손의 종류를 정밀하게 분류하는 Stage 2 분류 모델 구축
+* 탐지된 차량의 파손 부위를 크롭(Crop)하여 파손의 종류를 정밀하게 분류하는 Stage2 분류 모델 구축
 * 데이터 불균형 문제와 실제 활용을 감안하여 계층적 평가 지표(Major/Minor)를 도입
 
 ## 데이터셋 구축 과정 (Data Preprocessing)
- - Stage1(Car Detection) 결과를 활용하여 전처
-1.Stage 1 기반 Crop 데이터 생성
-* 핵심 로직: Stage 1 모델이 탐지한 차량의 Bounding Box 영역을 원본 이미지에서 크롭하여 사용
+### 1.Stage 1(Car Detection) 결과를 활용하여 전처리
+* Stage1 모델이 탐지한 차량의 Bounding Box 영역을 원본 이미지에서 crop하여 차량 외 불필요한 배경 제거
   - yolov8x_fine_tuning_5th, confidence threshold = 0.1 적용
   - 동일 이미지에 복수의 box 탐지 시, 가장 큰 box(차량) 선택
-  - 만약 차량 이미지를 탐지하지 못 하면, 이미지 전체를 그대로 선
+  - 만약 차량 이미지를 탐지하지 못 하면, 이미지 전체를 그대로 선택택
 * 좌표 변환: 원본 이미지의 파손 위치 JSON 데이터를 크롭된 이미지의 상대 좌표로 재계산하여 정확한 학습 영역을 지정
+
+| **dataset samples(원본 vs Crop 비교)** | 
+| :---: |
+| <img src="./results/01_detection/car_damage_dataset_comparison_sample.png" width="100%"> |
   
 2. 클래스 매핑 및 통합
 * 데이터의 특성에 맞춰 유사 클래스를 통합하고 ID를 부여합니다.
@@ -51,9 +54,7 @@ CAR_DAMAGE_DATASET_STAGE2_MULTI/
 | <img src="./results/01_detection/car_damage_dataset_sample.png" width="100%"> |
 
 
-| **dataset samples(원본 vs Crop 비교)** | 
-| :---: |
-| <img src="./results/01_detection/car_damage_dataset_comparison_sample.png" width="100%"> |
+
 
 ## 모델 학습 및 최적화
 * Architecture: YOLOv8 Classification/Detection 기반 커스텀 모델
