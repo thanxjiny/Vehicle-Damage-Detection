@@ -125,7 +125,7 @@
 
 | YOLOv8-Seg (performance_correlation_plot) | 
 | :---: | 
-| <img src="./results/performance correlation plot.png" width="100%">| 
+| <img src="./results/performance_correlation_plot.png" width="100%">| 
 
 - high efficiency(3) : Rear bumper, Roof, C pillar
 - hard case(1) : Rear Wheel(L)
