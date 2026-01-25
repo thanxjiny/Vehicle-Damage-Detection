@@ -1,6 +1,6 @@
 
 # 🚗 Car Damage Detection Model Comparison: YOLOv8-Seg vs U-Net
-차량 파손 부위(범퍼, 휀다, 휠 등)를 정밀하게 탐지하기 위해 **Instance Segmentation (YOLOv8)**과 **Semantic Segmentation (U-Net)** 두 가지 모델을 학습하고 성능을 비교
+차량 파손 부위(범퍼, 휀다, 휠 등)를 정밀하게 탐지하기 위해 **Instance Segmentation (YOLOv8)** 과 **Semantic Segmentation (U-Net)** 두 가지 모델을 학습하고 성능을 비교
 
 ## 📌 1. 프로젝트 개요 (Overview)
 
@@ -66,7 +66,7 @@
       - DataLoader를 통해 이미지를 배치 단위(예: 8장씩)로 가져옴
       - 모델이 예측한 마스크(preds)와 정답 마스크(masks)를 1차원 배열(Flatten)로 펼침
       - jaccard_score(average='macro')를 사용해 해당 배치 내에서의 mIoU를 계산
-      - 모든 배치의 mIoU 점수를 리스트(iou_scores)에 담은 뒤, 마지막에 **단순 평균(np.mean)**을 계슨
+      - 모든 배치의 mIoU 점수를 리스트(iou_scores)에 담은 뒤, 마지막에 **단순 평균(np.mean)** 을 계슨
 
    - "Batch-wise Averaging": 전체 데이터셋의 픽셀을 한 번에 합쳐서 계산하는 것이 아니라, 배치별 점수의 평균을 계산. 따라서 배치 크기(Batch Size)에 따라 점수가 미세하게 달라질 수 있음
 ---
