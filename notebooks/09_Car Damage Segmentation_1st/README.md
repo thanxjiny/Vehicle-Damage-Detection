@@ -215,11 +215,7 @@
 ### 🔧 YOLO 모델 성능(mIoU) 올리기
 1. 0점 클래스 데이터 보강:
    - Rear Wheel(L), Windshield, Pillar 계열의 점수가 0. 이 부품들이 포함된 사진을 더 모으거나, 데이터 증강(Augmentation) 시 Crop이나 Rotation을 활용해 해당 부품이 잘리지 않게
-
-2. 모델 경량화 (속도 개선이 필요하다면):
-   - 만약 16 FPS가 너무 느리다면, yolov8m-seg (Medium) 또는 yolov8s-seg (Small)로 변경해보세요. mIoU는 1~3% 떨어지겠지만 속도는 2~3배 빨라짐
-
-3. 이미지 해상도 조절:
+2. 이미지 해상도 조절:
    - 현재 imgsz=640을 사용 중인데, 작은 부품(Pillar 등)을 잘 잡으려면 1280으로 학습해보는 것도 방법
 
  
