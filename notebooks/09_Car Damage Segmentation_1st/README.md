@@ -71,9 +71,9 @@
    - "Batch-wise Averaging": 전체 데이터셋의 픽셀을 한 번에 합쳐서 계산하는 것이 아니라, 배치별 점수의 평균을 계산. 따라서 배치 크기(Batch Size)에 따라 점수가 미세하게 달라질 수 있음
 ---
 
-## 📈 3. 상세 분석 결과 (Detailed Analysis)
+## 📈 3. 상세 분석 결과 (YOLO v8-Seg)
 
-### 📈 YOLOv8-Seg 모델 성능 평가 및 데이터 분포
+### 📈 모델 성능 평가 및 데이터 분포
 - **평가 데이터셋**: Test Set
 - **전체 Box mAP(50-95)**: `0.3681`
 - **전체 Mask mAP(50-95)**: `0.3546`
@@ -129,7 +129,71 @@
 
 - high efficiency(3) : Rear bumper, Roof, C pillar
 - hard case(1) : Rear Wheel(L)
-   - Wheel을 앞과 뒤, 좌와 우로 구분은 육안으로도 어려움   
+   - Wheel을 앞과 뒤, 좌와 우로 구분은 육안으로도 어려움
+
+### 클래스별 검출 수량 비교 (Class-wise Count Comparison)
+
+| Class ID (Name) | GT Count | Pred Count | Diff | Status |
+| :--- | :---: | :---: | :---: | :--- |
+| **TOTAL** | **2,649** | **7,375** | **+4,726** | 🔴 **Severe Over** |
+| 0 (Front fender(L)) | 175 | 462 | +287 | 🔴 Over |
+| 1 (Rear bumper) | 477 | 724 | +247 | 🔴 Over |
+| 2 (Front Wheel(R)) | 56 | 213 | +157 | 🔴 Over |
+| 3 (Trunk lid) | 109 | 308 | +199 | 🔴 Over |
+| 4 (Rocker panel(L)) | 36 | 172 | +136 | 🔴 Over |
+| 5 (Front fender(R)) | 168 | 449 | +281 | 🔴 Over |
+| 6 (Front bumper) | 707 | 981 | +274 | 🔴 Over |
+| 7 (Bonnet) | 83 | 343 | +260 | 🔴 Over |
+| 8 (Rear Wheel(R)) | 16 | 187 | +171 | 🔴 Over |
+| 9 (Rear door(R)) | 70 | 286 | +216 | 🔴 Over |
+| 10 (Front door(R)) | 53 | 268 | +215 | 🔴 Over |
+| 11 (Head lights(R)) | 62 | 288 | +226 | 🔴 Over |
+| 12 (Rear fender(R)) | 114 | 362 | +248 | 🔴 Over |
+| 13 (Rear fender(L)) | 102 | 345 | +243 | 🔴 Over |
+| 14 (Rocker panel(R)) | 43 | 173 | +130 | 🔴 Over |
+| 15 (Rear lamp(L)) | 37 | 110 | +73 | 🔴 Over |
+| 16 (Side mirror(R)) | 32 | 94 | +62 | 🔴 Over |
+| 17 (Rear Wheel(L)) | 6 | 85 | +79 | 🔴 Over |
+| 18 (Rear door(L)) | 46 | 244 | +198 | 🔴 Over |
+| 19 (Side mirror(L)) | 40 | 148 | +108 | 🔴 Over |
+| 20 (Head lights(L)) | 68 | 264 | +196 | 🔴 Over |
+| 21 (Front Wheel(L)) | 32 | 292 | +260 | 🔴 Over |
+| 22 (Front door(L)) | 49 | 371 | +322 | 🔴 Over |
+| 23 (Rear lamp(R)) | 24 | 158 | +134 | 🔴 Over |
+| 24 (Windshield) | 3 | 3 | 0 | 🟢 Match |
+| 26 (Undercarriage) | 2 | 0 | -2 | 🟡 Missed |
+| 27 (Rear windshield) | 1 | 16 | +15 | 🔴 Over |
+| 28 (Unknown) | 0 | 8 | +8 | 🟣 New Detect |
+| 29 (A pillar(L)) | 1 | 17 | +16 | 🔴 Over |
+| 30 (C pillar(R)) | 1 | 0 | -1 | 🟡 Missed |
+| 31 (A pillar(R)) | 4 | 4 | 0 | 🟢 Match |
+| *Invalid Labels (A, Bonnet...)* | 29 | 0 | -29 | ⚠️ Data Error |
+
+> *참고: 하단의 Invalid Labels는 학습 데이터셋(GT)의 라벨링 오류(숫자가 아닌 텍스트 등)로 추정됩니다.*
+
+### 예측값 신뢰도 분포 (Confidence Score Distribution)
+
+모델이 예측한 객체들의 신뢰도 점수 분포입니다. **0~9점(0.1 미만) 구간의 비율이 매우 높음**을 확인
+
+| 점수 구간 (Range) | 개수 (Count) | 비율 (Ratio) | 분석 (Insight) |
+| :---: | :---: | :---: | :--- |
+| **0 ~ 9** | **3,235** | **43.86%** | ⚠️ **Noise (Low Confidence)** |
+| 10 ~ 19 | 621 | 8.42% | ⚠️ Low Confidence |
+| 20 ~ 29 | 418 | 5.67% | Check Threshold |
+| 30 ~ 39 | 318 | 4.31% | - |
+| 40 ~ 49 | 258 | 3.50% | - |
+| 50 ~ 59 | 226 | 3.06% | - |
+| 60 ~ 69 | 275 | 3.73% | - |
+| 70 ~ 79 | 337 | 4.57% | - |
+| 80 ~ 89 | 469 | 6.36% | ✅ High Confidence |
+| **90 ~ 100** | **1,218** | **16.52%** | ✅ **High Confidence** |
+
+###  종합 요약 (Summary)
+* **과탐지 경향 (Over-detection)**: 원본 객체 수 대비 약 **2.8배** 많은 객체를 탐지
+* **원인 분석**: 낮은 신뢰도(Confidence < 0.2)의 예측값이 전체의 약 **52%**를 차지하고 있어, 허탐(False Positive)이 많은 상태
+* **개선 방향**: Inference 시 `Confidence Threshold`를 **0.25 이상**으로 상향 조정하면 정밀도가 크게 개선될 것으로 예상
+
+---
 
 ## 🖼️ 4. 시각화 결과 (Visualization)
 
