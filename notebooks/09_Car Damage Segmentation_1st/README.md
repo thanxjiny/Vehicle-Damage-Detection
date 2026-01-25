@@ -136,11 +136,16 @@
 | YOLOv8-Seg | 
 | :---: | 
 | <img src="./results/yolo_visual.png" width="100%">| 
+| <img src="./results/yolo_visual.png2" width="100%">| 
+| <img src="./results/yolo_visual.png3" width="100%">| 
+| <img src="./results/yolo_visual.png4" width="100%">| 
+
 
 | U-Net | 
 | :---: | 
 | <img src="./results/unet_visual.png" width="100%">| 
-
+| <img src="./results/unet_visual2.png" width="100%">| 
+| <img src="./results/unet_visual3.png" width="100%">| 
 
 ## 5. 향후 개선 가이드 (Next Steps)
 
