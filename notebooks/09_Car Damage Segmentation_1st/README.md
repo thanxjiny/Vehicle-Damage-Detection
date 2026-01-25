@@ -136,10 +136,9 @@
 | YOLOv8-Seg | 
 | :---: | 
 | <img src="./results/yolo_visual.png" width="100%">| 
-| <img src="./results/yolo_visual.png2" width="100%">| 
-| <img src="./results/yolo_visual.png3" width="100%">| 
-| <img src="./results/yolo_visual.png4" width="100%">| 
-
+| <img src="./results/yolo_visual2.png" width="100%">| 
+| <img src="./results/yolo_visual3.png" width="100%">| 
+| <img src="./results/yolo_visual4.png" width="100%">| 
 
 | U-Net | 
 | :---: | 
