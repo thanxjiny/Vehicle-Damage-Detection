@@ -1,4 +1,3 @@
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/thanxjiny/Vehicle-Damage-Detection/blob/main/notebooks/09_Car Damage Segmentation_1st/1_study4_damage_part_classification_yolo.ipynb)
 
 # 🚗 Car Damage Detection Model Comparison: YOLOv8-Seg vs U-Net
 차량 파손 부위(범퍼, 휀다, 휠 등)를 정밀하게 탐지하기 위해 **Instance Segmentation (YOLOv8)**과 **Semantic Segmentation (U-Net)** 두 가지 모델을 학습하고 성능을 비교
