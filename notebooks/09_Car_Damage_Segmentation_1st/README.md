@@ -7,6 +7,19 @@
 
 * **목표**: 차량 파손 이미지에서 손상 부위를 정확히 탐지하고, 수리비 견적 산출을 위한 기초 데이터(부위, 개수, 면적)를 확보
 * **데이터셋**: Balanced Polygon Dataset (Train/Val/Test Split 완료)
+convert_dataset.py, sampling_dataset.py
+```text
+04_DATA/balanced_dataset_split_polygon/
+├── images/
+│   ├── train/ (8400 images)
+│   └── val/   (1800 images)
+│   └── test/  (1800 images) 
+└── labels/
+    ├── train/ (8400 txt 파일)
+    └── val/   (1800 txt 파일)
+    └── test/  (1800 txt 파일)
+```
+
 * **사용 모델**:
     1.  **YOLOv8x-Seg**: 속도와 정확도의 균형이 뛰어난 최신 One-stage 모델 (Extra Large)
     2.  **Mask R-CNN (ResNet50)**: 높은 정밀도를 자랑하는 전통적인 Two-stage 모델
@@ -23,9 +36,7 @@
 
 | binary mask matrix |
 | :---: |
-| <img src="./results/unet_mask.png" width="80%"> |
-
-
+| <img src="./results/unet_mask.png" width="50%"> |
 ---
 
 ## 📊 2. 모델 성능 비교 요약 (Performance Summary)
