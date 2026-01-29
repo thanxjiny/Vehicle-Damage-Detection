@@ -45,10 +45,10 @@ convert_dataset.py, sampling_dataset.py
 
 | Metric | **YOLOv8x-Seg** | **Mask R-CNN** | **U-Net** | **비고 (Winner)** |
 | :--- | :---: | :---: | :---: | :--- |
-| **Box mAP (@50-95)** | **36.8%** | 15.4% | N/A | **🏆 YOLO (압도적)** |
-| **Mask mAP (@50-95)** | **34.9%** | 16.5% | N/A | **🏆 YOLO (압도적)** |
-| **정확도 (mIoU)** | **24.89%** | 15.22% | 10.35% | **🏆 YOLO** |
-| **속도 (FPS)** | 16.67 FPS | 7.99 FPS | **63.89 FPS** | 🚀 **U-Net** |
+| **Box mAP (@50-95)** | **36.8%** | 25.53% | N/A | **🏆 YOLO (압도적)** |
+| **Mask mAP (@50-95)** | **34.9%** | 23.8% | N/A | **🏆 YOLO (압도적)** |
+| **정확도 (mIoU)** | **24.89%** | 20.1% | 10.35% | **🏆 YOLO** |
+| **속도 (FPS)** | 16.67 FPS | 6.34 FPS | **63.89 FPS** | 🚀 **U-Net** |
 | **종합 평가** | **Selected (✅)** | Low Accuracy | Fast but Failed | **YOLO 선정** |
 
 > **💡 핵심 결론**:
@@ -147,7 +147,7 @@ convert_dataset.py, sampling_dataset.py
 
 | YOLOv8-Seg (Best Result) | Mask R-CNN | U-Net |
 | :---: | :---: | :---: |
-| <img src="./results/yolo_visual.png" width="100%"> | *(Mask R-CNN 이미지 추가 예정)* | <img src="./results/unet_visual.png" width="100%"> |
+| <img src="./results/yolo_visual.png" width="100%"> | <img src="./results/mask_r_cnn" width="100%">  | <img src="./results/unet_visual.png" width="100%"> |
 | **명확한 객체 분리 및 높은 정확도** | **탐지 누락 및 낮은 신뢰도** | **경계 불분명 및 뭉개짐 현상** |
 
 ---
