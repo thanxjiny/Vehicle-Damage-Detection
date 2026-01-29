@@ -147,7 +147,7 @@ convert_dataset.py, sampling_dataset.py
 
 | YOLOv8-Seg (Best Result) | Mask R-CNN | U-Net |
 | :---: | :---: | :---: |
-| <img src="./results/yolo_visual.png" width="100%"> | <img src="./results/mask_rcnn" width="100%">  | <img src="./results/unet_visual.png" width="100%"> |
+| <img src="./results/yolo_visual.png" width="100%"> | <img src="./results/mask_rcnn.png" width="100%">  | <img src="./results/unet_visual.png" width="100%"> |
 | **명확한 객체 분리 및 높은 정확도** | **탐지 누락 및 낮은 신뢰도** | **경계 불분명 및 뭉개짐 현상** |
 
 ---
