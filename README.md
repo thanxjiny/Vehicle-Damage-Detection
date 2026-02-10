@@ -28,6 +28,7 @@
 | **Damage Detection** | **Step 3** | 파손 인식 3rd | YOLOv8 (12000) | ✅ Done | [상세보기](./notebooks/07_Damage_Detection_FineTuning_3rd/README.md) | |
 | **Damage Classification** | **Step 1** | 파손 유형 1st | YOLOv8 (12000) | ✅ Done | [상세보기](./notebooks/08_Damage_Classification_FineTuning_1st/README.md) | |
 | **Damage Detection** | **Step 1** | 파손 부위 1st | YOLOv8x-Seg (12000) | ✅ Done | [상세보기](./notebooks/09_Car_Damage_Segmentation_1st/README.md) | |
+| **Damage Detection** | **Step 2** | 파손 부위_8면 | YOLOv8x-Seg (12000) | ✅ Done | [상세보기](./notebooks/10_Car_Damage_Segmentation_2st/README.md) | |
 
 ## Tech Stack
 * Python 3.10
