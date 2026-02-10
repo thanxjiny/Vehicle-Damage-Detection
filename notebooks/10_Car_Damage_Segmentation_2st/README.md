@@ -91,3 +91,11 @@ YOLO가 탐지한 객체(`Confidence > 0.25`)를 분석하여 4방향 점수(`F`
 - → 점수 계산할 필요 없이 즉시 **`Back`** 확정.
 
 ---
+| sample |
+| :---: |
+| <img src="./results/images10.png" width="50%"> |
+| <img src="./results/images20.png" width="50%"> |
+| <img src="./results/images30.png" width="50%"> |
+| <img src="./results/images40.png" width="50%"> |
+| <img src="./results/images50.png" width="50%"> |
+
