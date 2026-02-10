@@ -93,9 +93,10 @@ YOLO가 탐지한 객체(`Confidence > 0.25`)를 분석하여 4방향 점수(`F`
 ---
 | sample |
 | :---: |
-| <img src="./results/images10.png" width="50%"> |
-| <img src="./results/images20.png" width="50%"> |
-| <img src="./results/images30.png" width="50%"> |
-| <img src="./results/images40.png" width="50%"> |
-| <img src="./results/images50.png" width="50%"> |
+| <img src="./results/image10.png" width="50%"> |
+| <img src="./results/image20.png" width="50%"> |
+| <img src="./results/image30.png" width="50%"> |
+| <img src="./results/image40.png" width="50%"> |
+| <img src="./results/image50.png" width="50%"> |
+
 
