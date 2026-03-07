@@ -32,6 +32,7 @@
 
 ## Final Report
 | Subject| Stage | Topic | Model | Status | Report |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 | **Car Classification** | **Step 1** | 차량 인식 | Resnet50 등 6개 | ✅ Done | [상세보기](./notebooks/11_Final_Report_Car_Classification_1st/README.md) | |
 
 
