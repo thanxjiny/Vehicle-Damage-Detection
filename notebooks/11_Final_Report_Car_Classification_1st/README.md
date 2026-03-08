@@ -32,12 +32,12 @@
 
 | 데이터셋 (Dataset) | 클래스 (Class) | 샘플 이미지 1 | 샘플 이미지 2 |
 | :--- | :---: | :---: | :---: |
-| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | `damaged_car`<br>🔴 파손 | <img src="여기에_이미지경로_입력/aihub_dmg_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/aihub_dmg_2.jpg" width="220" height="160"> |
-| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="여기에_이미지경로_입력/aihub_nrm_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/aihub_nrm_2.jpg" width="220" height="160"> |
-| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="여기에_이미지경로_입력/kaggle_nrm_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/kaggle_nrm_2.jpg" width="220" height="160"> |
-| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/ocr_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/ocr_non_2.jpg" width="220" height="160"> |
-| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/park_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/park_non_2.jpg" width="220" height="160"> |
-| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/coco_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/coco_non_2.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | `damaged_car`<br>🔴 파손 | <img src="./sample_images/aihub_dmg_1.jpg" width="220" height="160"> | <img src="./sample_images/aihub_dmg_2.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/aihub_nrm_1.jpg" width="220" height="160"> | <img src="./sample_images/aihub_nrm_2.jpg" width="220" height="160"> |
+| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/kaggle_nrm_1.jpg" width="220" height="160"> | <img src="./sample_images/kaggle_nrm_2.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/ocr_non_1.jpg" width="220" height="160"> | <img src="./sample_images/ocr_non_2.jpg" width="220" height="160"> |
+| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/park_non_1.jpg" width="220" height="160"> | <img src="./sample_images/park_non_2.jpg" width="220" height="160"> |
+| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/coco_non_1.jpg" width="220" height="160"> | <img src="./sample_images/coco_non_2.jpg" width="220" height="160"> |
 
 
 
@@ -88,6 +88,7 @@
 * **최고 정확도 모델 (Swin V2):** 2,664장의 테스트 이미지 중 **단 1건의 오탐(Accuracy 99.96%)**만을 기록하며 압도적인 1위를 차지. 차량 전체의 문맥(Global)과 미세한 파손 부위(Local)를 동시에 파악하는 계층적 트랜스포머 구조가 가장 효과적임을 입증
 * **최고 속도 모델 (ResNet50):** 딥러닝 비전의 표준 모델답게 **149.68 FPS**라는 가장 빠른 추론 속도를 보여주었으며, 오탐 역시 5건으로 훌륭하게 방어해 내어 대규모 서버 환경의 실시간 처리에 가장 유리
 * **초경량화 모델 (YOLOv8-cls):** 파라미터 수가 **1.44M**으로 다른 모델 대비 압도적으로 가벼우나, 상대적으로 오탐(17건)이 다소 발생했으나, 스마트폰이나 엣지(Edge) 디바이스 등 컴퓨팅 자원이 극도로 제한된 환경에서는 최고의 선택지가 될 수 있음
+
 
 
 
