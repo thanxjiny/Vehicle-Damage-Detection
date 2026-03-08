@@ -10,7 +10,7 @@
 
 ---
 
-## Dataset 
+## 1. Dataset 
 
 다양한 환경(조명, 각도, 차종, 배경)에서도 강건한(Robust) 모델을 만들기 위해 총 6개의 자체 구축 데이터셋을 병합하여 사용
 
@@ -29,9 +29,21 @@
 | **Total** | - | **3개 클래스** | **26,628장** |
 
 > *Tip: 모든 이미지는 학습 전 `224x224` (Swin V2는 `256x256`) 해상도로 리사이즈 및 정규화
----
+
+| 데이터셋 (Dataset) | 클래스 (Class) | 샘플 이미지 1 | 샘플 이미지 2 |
+| :--- | :---: | :---: | :---: |
+| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | `damaged_car`<br>🔴 파손 | <img src="여기에_이미지경로_입력/aihub_dmg_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/aihub_dmg_2.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="여기에_이미지경로_입력/aihub_nrm_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/aihub_nrm_2.jpg" width="220" height="160"> |
+| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="여기에_이미지경로_입력/kaggle_nrm_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/kaggle_nrm_2.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/ocr_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/ocr_non_2.jpg" width="220" height="160"> |
+| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/park_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/park_non_2.jpg" width="220" height="160"> |
+| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="여기에_이미지경로_입력/coco_non_1.jpg" width="220" height="160"> | <img src="여기에_이미지경로_입력/coco_non_2.jpg" width="220" height="160"> |
+
+
 
 ### 데이터 분할 결과 (Train / Valid / Test)
+
+층화 추출(Stratified Split)
 
 | 데이터셋명 | Train (80%) | Valid (10%) | Test (10%) | 합계 |
 | :--- | :--- | :--- | :--- | :--- |
@@ -43,7 +55,11 @@
 | **coco2017_nocar** | 800 | 100 | 100 | 1,000 |
 | **최종 데이터셋 구성** | **21,302** | **2,662** | **2,664** | **26,628** |
 
-## Models Introduced
+---
+
+## 2. Modeling
+
+### Models Introduced
 
 1. **ResNet50 (Baseline)**
    * 딥러닝 비전의 표준이자 기준점(Baseline)이 되는 전통적인 CNN 아키텍터로 안정적인 성능을 보장
@@ -55,9 +71,8 @@
    * 이미지를 윈도우(Window) 단위로 쪼개어 계층적으로 분석하는 비전 트랜스포머 모델로, 차량 전체의 모습과 미세한 파손 부위를 동시에 캐치하는 데 탁월
 5. **YOLOv8 (Classification)**
    * 초고속 객체 탐지로 유명한 YOLO의 분류 전용 모델. 파라미터가 매우 가벼워 실시간 모바일/엣지 디바이스 환경에 최적화
----
 
-## Performance Comparison (test data 2,664장)
+### Performance Comparison (test data 2,664장)
 
 | Model | Accuracy (%) | F1-Score | FPS (추론 속도) | Params (M) |Fail|
 | :--- | :--- | :--- | :--- | :--- |:--- |
@@ -67,12 +82,13 @@
 | **Swin V2 (Tiny)** | 99.96 | 99.96 | 53.56 | 27.58 |1|
 | **YOLOv8n-cls** | 99.36 | 99.36 | 38.05 | 1.44 |17|
 
-## Conclusion (결론 요약)
+## 3. Conclusion 
 테스트 결과, 모든 모델이 99% 이상의 뛰어난 정확도를 달성하여 구축된 데이터셋의 높은 품질을 증명
 
 * **최고 정확도 모델 (Swin V2):** 2,664장의 테스트 이미지 중 **단 1건의 오탐(Accuracy 99.96%)**만을 기록하며 압도적인 1위를 차지. 차량 전체의 문맥(Global)과 미세한 파손 부위(Local)를 동시에 파악하는 계층적 트랜스포머 구조가 가장 효과적임을 입증
 * **최고 속도 모델 (ResNet50):** 딥러닝 비전의 표준 모델답게 **149.68 FPS**라는 가장 빠른 추론 속도를 보여주었으며, 오탐 역시 5건으로 훌륭하게 방어해 내어 대규모 서버 환경의 실시간 처리에 가장 유리
 * **초경량화 모델 (YOLOv8-cls):** 파라미터 수가 **1.44M**으로 다른 모델 대비 압도적으로 가벼우나, 상대적으로 오탐(17건)이 다소 발생했으나, 스마트폰이나 엣지(Edge) 디바이스 등 컴퓨팅 자원이 극도로 제한된 환경에서는 최고의 선택지가 될 수 있음
+
 
 
 
