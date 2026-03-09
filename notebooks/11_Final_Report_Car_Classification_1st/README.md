@@ -135,11 +135,12 @@
 
 | **Application_sample2** | 
 | :---: | 
-| <img src="./application/application_result_sample.png2" width="700"> | 
+| <img src="./application/application_result_sample2.png" width="700"> | 
 
 | **Application_sample3** | 
 | :---: | 
 | <img src="./application/application_result_sample3.png" width="700"> | 
+
 
 
 
