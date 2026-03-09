@@ -129,9 +129,19 @@
    * 이미지 전체 면적 대비 차량 BBox의 면적 비율(%)을 계산하여 화면에 출력
    * (추후 활용안: 비율이 너무 작을 경우 "차량이 너무 멉니다. 가까이서 다시 촬영해 주세요" 등의 UI 알림 연동 가능)
 
-| **Application** | 
+| **Application_sample1** | 
 | :---: | 
-| <img src="./application/application_result_sample.png" width="900"> | 
+| <img src="./application/application_result_sample.png" width="700"> | 
+
+| **Application_sample2** | 
+| :---: | 
+| <img src="./application/application_result_sample.png2" width="700"> | 
+
+| **Application_sample3** | 
+| :---: | 
+| <img src="./application/application_result_sample3.png" width="700"> | 
+
+
 
 
 
