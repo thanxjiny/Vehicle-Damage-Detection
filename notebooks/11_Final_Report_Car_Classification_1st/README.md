@@ -17,6 +17,7 @@
 클래스 불균형을 방지하고 정확한 평가를 진행하기 위해 전체 데이터를 **Train 8 : Validation 1 : Test 1** 비율로 층화 추출(Stratified Split)하여 구축
 
 ### 데이터셋 구성표
+> 데이터셋 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/DJ_FINAL_DATASET"
 
 | 데이터셋명 (Dataset) | 출처 (Source) | 구분 (Class) | 이미지 수 (Images) |비고|
 | :--- | :--- | :--- | :--- |:--- |
@@ -54,6 +55,15 @@
 | **auto_crop_parking_lot** | 246 | 30 | 32 | 308 |
 | **coco2017_nocar** | 800 | 100 | 100 | 1,000 |
 | **최종 데이터셋 구성** | **21,302** | **2,662** | **2,664** | **26,628** |
+
+> 최종 데이터셋 구조도
+/content/classification_dataset/  
+  ├── train/  
+  │    ├── damaged_car/ (파손 차량 이미지들만)  
+  │    ├── normal_car/  (정상 차량 이미지들만)  
+  │    └── non_car/     (차량 없음 이미지들만)  
+  ├── val/  
+  └── test/  
 
 ---
 
@@ -111,6 +121,8 @@
 * **최고 속도 모델 (ResNet50):** 딥러닝 비전의 표준 모델답게 **149.68 FPS**라는 가장 빠른 추론 속도를 보여주었으며, 오탐 역시 5건으로 훌륭하게 방어해 내어 대규모 서버 환경의 실시간 처리에 가장 유리
 * **초경량화 모델 (YOLOv8-cls):** 파라미터 수가 **1.44M**으로 다른 모델 대비 압도적으로 가벼우나, 상대적으로 오탐(17건)이 다소 발생했으나, 스마트폰이나 엣지(Edge) 디바이스 등 컴퓨팅 자원이 극도로 제한된 환경에서는 최고의 선택지가 될 수 있음
 
+----
+
 ## 3. Application (응용 파이프라인: Cascade Architecture)
 
  - 본 스터디 결과를 바탕으로, 실제 서비스(차량 사진 적합성)에 즉시 도입할 수 있는 **2-Step 추론 파이프라인**을 시범 구축
@@ -131,15 +143,41 @@
 
 | **Application_sample1** | 
 | :---: | 
-| <img src="./application/application_result_sample.png" width="700"> | 
+| <img src="./application/application_result_sample.png" width="500"> | 
 
 | **Application_sample2** | 
 | :---: | 
-| <img src="./application/application_result_sample2.png" width="700"> | 
+| <img src="./application/application_result_sample2.png" width="500"> | 
 
 | **Application_sample3** | 
 | :---: | 
-| <img src="./application/application_result_sample3.png" width="700"> | 
+| <img src="./application/application_result_sample3.png" width="500"> | 
+
+
+### Interactive Web Demo (Gradio UI)
+
+사용자가 복잡한 코드 없이 직관적으로 파이프라인의 성능을 테스트해 볼 수 있도록, **Gradio**를 활용하여 대화형 웹 데모(Interactive Web UI) 구축
+
+방화벽이나 로컬 환경의 제약 없이 Google Colab 환경 내부에서 즉시 실행되며, 모델의 추론 과정을 실시간으로 시각화하여 제공
+
+#### 주요 기능 (Key Features)
+* **Drag & Drop 업로드:** 사용자가 손쉽게 차량 사진(jpg, png)을 업로드할 수 있는 직관적인 인터페이스
+* **실시간 추론:** 버튼 클릭 한 번으로 `ResNet50(고속 필터링) -> YOLOv8x(정밀 탐지)`로 이어지는 2-Stage 파이프라인 즉각 가동
+  * YOLOv8x : study1. 차량 인식 파인튜닝 모델 활용(Yolo v8x)
+* **시각화 및 리포트 제공:** * 탐지된 차량의 Bounding Box 및 면적 비율(Ratio) 화면 출력
+  * 각 단계별 서버 연산 속도(Inference Time) 및 종합 성능 리포트 제공
+
+#### 웹 데모 실행 화면 (Demo Screenshots)
+
+|  AI 분석 결과 화면 (차량 판별 및 BBox 추출) |
+| :---: |
+| <img src="./gradio/gradio_sample.jpg" width="450"> | 
+
+#### 실행 방법 (How to Run)
+첨부된 Gradio_Car_Detection.ipynb 실행
+
+
+
 
 
 
