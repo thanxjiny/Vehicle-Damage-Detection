@@ -171,10 +171,11 @@
 
 |  AI 분석 결과 화면 (차량 판별 및 BBox 추출) |
 | :---: |
-| <img src="./gradio/gradio_sample.jpg" width="450"> | 
+| <img src="./Gradio/gradio_sample.jpg" width="1000"> | 
 
 #### 실행 방법 (How to Run)
 첨부된 Gradio_Car_Detection.ipynb 실행
+
 
 
 
