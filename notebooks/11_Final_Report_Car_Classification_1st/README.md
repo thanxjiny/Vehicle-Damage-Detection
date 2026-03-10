@@ -40,6 +40,16 @@
 | **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/park_non_1.jpg" width="220" height="160"> | <img src="./sample_images/park_non_2.jpg" width="220" height="160"> |
 | **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/coco_non_1.jpg" width="220" height="160"> | <img src="./sample_images/coco_non_2.jpg" width="220" height="160"> |
 
+| 데이터셋 (Dataset) | 작업 파일 | 최종 파일 | 
+| :--- | :---: | :---: | 
+| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | 01_aihub_damaged_car_data_sampler.py | SAMPLE_aihub_damaged_car_data.zip |
+| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/aihub_nrm_1.jpg" width="220" height="160"> |
+| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/kaggle_nrm_1.jpg" width="220" height="160"> |
+| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/ocr_non_1.jpg" width="220" height="160"> |
+| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/park_non_1.jpg" width="220" height="160"> | 
+| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/coco_non_1.jpg" width="220" height="160"> | 
+
+
 
 
 ### 데이터 분할 결과 (Train / Valid / Test)
@@ -175,6 +185,7 @@
 
 #### 실행 방법 (How to Run)
 첨부된 Gradio_Car_Detection.ipynb 실행
+
 
 
 
