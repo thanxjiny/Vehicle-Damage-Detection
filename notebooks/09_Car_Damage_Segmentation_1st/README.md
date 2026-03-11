@@ -6,8 +6,10 @@
 ## 📌 1. 프로젝트 개요 (Overview)
 
 * **목표**: 차량 파손 이미지에서 손상 부위를 정확히 탐지하고, 수리비 견적 산출을 위한 기초 데이터(부위, 개수, 면적)를 확보
-* **데이터셋**: Balanced Polygon Dataset (Train/Val/Test Split 완료)
-convert_dataset.py, sampling_dataset.py
+
+> 데이터셋 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/04_DATA/balanced_dataset_split_polygon
+> 작업파일 : convert_dataset.py, sampling_dataset.py (Train/Val/Test Split 완료)
+
 ```text
 04_DATA/balanced_dataset_split_polygon/
 ├── images/
