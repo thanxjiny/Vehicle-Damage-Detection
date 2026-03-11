@@ -19,6 +19,26 @@
 ### 데이터셋 구성표
 > 데이터셋 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/DJ_FINAL_DATASET"
 
+| 데이터셋명 (Dataset) | 출처 (Source) | 구분 (Class) | 이미지 수 | 샘플 이미지 1 | 샘플 이미지 2 |
+| :--- | :--- | :--- | :--- | :---: | :---: |
+| <small>**aihub_damaged_car_data**</small> | <small>AIHub.차량파손 이미지 데이터</small> | <small>파손 차량<br>(`damaged_car`)</small> | <small>12,200장</small> | <img src="./sample_images/aihub_dmg_1.jpg" width="300" height="220"> | <img src="./sample_images/aihub_dmg_2.jpg" width="300" height="220"> |
+| <small>**aihub_normal_car**</small> | <small>AI Hub.차량 외관 영상 데이터</small> | <small>정상 차량<br>(`normal_car`)</small> | <small>12,000장</small> | <img src="./sample_images/aihub_nrm_1.jpg" width="300" height="220"> | <img src="./sample_images/aihub_nrm_2.jpg" width="300" height="220"> |
+| <small>**kaggle_normal_car**</small> | <small>Kaggle</small> | <small>정상 차량<br>(`normal_car`)</small> | <small>920장</small> | <img src="./sample_images/kaggle_nrm_1.jpg" width="300" height="220"> | <img src="./sample_images/kaggle_nrm_2.jpg" width="300" height="220"> |
+| <small>**aihub_ocr_nocar**</small> | <small>AIHub.공공행정문서 OCR</small> | <small>차량 아님<br>(`non_car`)</small> | <small>200장</small> | <img src="./sample_images/ocr_non_1.jpg" width="300" height="220"> | <img src="./sample_images/ocr_non_2.jpg" width="300" height="220"> |
+| <small>**auto_crop_parking_lot**</small> | <small>AIHub.주차 공간 탐색 차량 데이터</small> | <small>차량 아님<br>(`non_car`)</small> | <small>308장</small> | <img src="./sample_images/park_non_1.jpg" width="300" height="220"> | <img src="./sample_images/park_non_2.jpg" width="300" height="220"> |
+| <small>**coco2017_nocar**</small> | <small>COCO 2017</small> | <small>차량 아님<br>(`non_car`)</small> | <small>1,000장</small> | <img src="./sample_images/coco_non_1.jpg" width="300" height="220"> | <img src="./sample_images/coco_non_2.jpg" width="300" height="220"> |
+| <small>**Total**</small> | - | <small>**3개 클래스**</small> | <small>**26,628장**</small> | - | - |
+> *Tip: 모든 이미지는 학습 전 `224x224` (Swin V2는 `256x256`) 해상도로 리사이즈 및 정규화
+
+| 데이터셋 (Dataset) | 작업 파일 | 최종 파일 | 
+| :--- | :---: | :---: | 
+| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | 01_aihub_damaged_car_data_sampler.py | SAMPLE_aihub_damaged_car_data.zip |
+| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | 03_aihub_normal_car_data_sampler.py| SAMPLE_aihub_normal_car.zip|
+| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | 04_kaggle_normal_cars.py |SAMPLE_kaggle_normal_car.zip |
+| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> |05_aihub_ocr_noncar.py | SAMPLE_aihub_ocr_nocar.zip |
+| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | 06_auto_crop_parking_lot.py | SAMPLE_auto_crop_parking_lot.zip| 
+| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | 07_sample_coco_noncar.py | SAMPLE_coco2017_nocar.zip | 
+
 | 데이터셋명 (Dataset) | 출처 (Source) | 구분 (Class) | 이미지 수 (Images) |비고|
 | :--- | :--- | :--- | :--- |:--- |
 | **SAMPLE_aihub_damaged_car_data** | AI Hub 160.차량파손 이미지 데이터 | 파손 차량 (`damaged_car`) | 12,200장 |valid의 50,445개 중 샘플링|
@@ -28,28 +48,6 @@
 | **SAMPLE_auto_crop_parking_lot** | AI Hub 주차 공간 탐색을 위한 차량 관점 복합 데이터| 차량 아님 (`non_car`) | 308장 |Yolo_v8l 차량부분 크롭| 
 | **SAMPLE_coco2017_nocar** | COCO 2017 | 차량 아님 (`non_car`) | 1000장 |10개 객체별 100장씩 샘플링|
 | **Total** | - | **3개 클래스** | **26,628장** |
-
-> *Tip: 모든 이미지는 학습 전 `224x224` (Swin V2는 `256x256`) 해상도로 리사이즈 및 정규화
-
-| 데이터셋 (Dataset) | 클래스 (Class) | 샘플 이미지 1 | 샘플 이미지 2 |
-| :--- | :---: | :---: | :---: |
-| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | `damaged_car`<br>🔴 파손 | <img src="./sample_images/aihub_dmg_1.jpg" width="220" height="160"> | <img src="./sample_images/aihub_dmg_2.jpg" width="220" height="160"> |
-| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/aihub_nrm_1.jpg" width="220" height="160"> | <img src="./sample_images/aihub_nrm_2.jpg" width="220" height="160"> |
-| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/kaggle_nrm_1.jpg" width="220" height="160"> | <img src="./sample_images/kaggle_nrm_2.jpg" width="220" height="160"> |
-| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/ocr_non_1.jpg" width="220" height="160"> | <img src="./sample_images/ocr_non_2.jpg" width="220" height="160"> |
-| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/park_non_1.jpg" width="220" height="160"> | <img src="./sample_images/park_non_2.jpg" width="220" height="160"> |
-| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/coco_non_1.jpg" width="220" height="160"> | <img src="./sample_images/coco_non_2.jpg" width="220" height="160"> |
-
-| 데이터셋 (Dataset) | 작업 파일 | 최종 파일 | 
-| :--- | :---: | :---: | 
-| **SAMPLE_aihub_damaged_car**<br><sup>(AI Hub 파손 차량)</sup> | 01_aihub_damaged_car_data_sampler.py | SAMPLE_aihub_damaged_car_data.zip |
-| **SAMPLE_aihub_normal_car**<br><sup>(AI Hub 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/aihub_nrm_1.jpg" width="220" height="160"> |
-| **SAMPLE_kaggle_normal_car**<br><sup>(Kaggle 정상 차량)</sup> | `normal_car`<br>🟢 정상 | <img src="./sample_images/kaggle_nrm_1.jpg" width="220" height="160"> |
-| **SAMPLE_aihub_ocr_nocar**<br><sup>(AI Hub OCR 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/ocr_non_1.jpg" width="220" height="160"> |
-| **SAMPLE_auto_crop_parking_lot**<br><sup>(자체 수집 주차장)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/park_non_1.jpg" width="220" height="160"> | 
-| **SAMPLE_coco2017_nocar**<br><sup>(COCO 2017 배경)</sup> | `non_car`<br>⚪ 배경 | <img src="./sample_images/coco_non_1.jpg" width="220" height="160"> | 
-
-
 
 
 ### 데이터 분할 결과 (Train / Valid / Test)
@@ -185,6 +183,7 @@
 
 #### 실행 방법 (How to Run)
 첨부된 Gradio_Car_Detection.ipynb 실행
+
 
 
 
