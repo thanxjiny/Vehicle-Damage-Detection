@@ -7,8 +7,8 @@
 
 * **목표**: 차량 파손 이미지에서 손상 부위를 정확히 탐지하고, 수리비 견적 산출을 위한 기초 데이터(부위, 개수, 면적)를 확보
 
-> 데이터셋 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/04_DATA/balanced_dataset_split_polygon
-> 작업파일 : convert_dataset_polygon.py, sampling_dataset_polygon.py
+* 데이터셋 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/04_DATA/balanced_dataset_split_polygon
+    * 작업파일 : convert_dataset_polygon.py, sampling_dataset_polygon.py
 
 ```text
 04_DATA/balanced_dataset_split_polygon/
@@ -22,10 +22,12 @@
     └── test/  (1800 txt 파일)
 ```
 
-* **사용 모델**:
-    1.  **YOLOv8x-Seg**: 속도와 정확도의 균형이 뛰어난 최신 One-stage 모델 (Extra Large)
-    2.  **Mask R-CNN (ResNet50)**: 높은 정밀도를 자랑하는 전통적인 Two-stage 모델
-    3.  **U-Net (ResNet34)**: 의료 영상 등 정밀 분할에 사용되는 Semantic Segmentation 모델
+* **모델링**:
+    * 적용 모델     
+        1.  **YOLOv8x-Seg**: 속도와 정확도의 균형이 뛰어난 최신 One-stage 모델 (Extra Large)
+        2.  **Mask R-CNN (ResNet50)**: 높은 정밀도를 자랑하는 전통적인 Two-stage 모델
+        3.  **U-Net (ResNet34)**: 의료 영상 등 정밀 분할에 사용되는 Semantic Segmentation 모델
+* 모델링 경로(구글 드라이블 적용) : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/SUBJECT/WEEK4_CAR_DAMAGE_SEGMENTATION/DJ/
 
 ### 🔍 모델별 특성 비교 분석
 
@@ -43,7 +45,7 @@
 
 ## 📊 2. 모델 성능 비교 요약 (Performance Summary)
 
-동일한 Test Dataset (1,800장)을 사용하여 3가지 모델의 **탐지 정확도(Box mAP)**, **분할 정확도(Mask mAP/mIoU)**, **속도(FPS)**를 측정하였습니다.
+동일한 Test Dataset (1,800장)을 사용하여 3가지 모델의 **탐지 정확도(Box mAP)**, **분할 정확도(Mask mAP/mIoU)**, **속도(FPS)** 를 측정
 
 | Metric | **YOLOv8x-Seg** | **Mask R-CNN** | **U-Net** | **비고 (Winner)** |
 | :--- | :---: | :---: | :---: | :--- |
@@ -63,25 +65,25 @@
 ## 📈 3. 상세 분석 결과 (Detailed Analysis)
 
 ### 3-1. YOLOv8-Seg (최종 선정 모델)
-* **성과**: `Front Bumper(mAP 0.90)`, `Rear Bumper(mAP 0.89)` 등 주요 부품에서 매우 높은 인식률을 기록함.
+* **성과**: `Front Bumper(mAP 0.90)`, `Rear Bumper(mAP 0.89)` 등 주요 부품에서 매우 높은 인식률을 기록
 * **장점**:
-    * **Robustness**: 크기가 큰 부품부터 작은 손상까지 균형 잡힌 검출 능력.
-    * **밸런스**: 16 FPS의 준수한 속도로 실시간성에 근접한 퍼포먼스 제공.
+    * **Robustness**: 크기가 큰 부품부터 작은 손상까지 균형 잡힌 검출 능력
+    * **밸런스**: 16 FPS의 준수한 속도로 실시간성에 근접한 퍼포먼스 제공
 * **단점**:
-    * 투명 재질(`Windshield`, `Head lights`)이나 얇은 부품(`Pillar`) 인식률이 상대적으로 낮음.
+    * 투명 재질(`Windshield`, `Head lights`)이나 얇은 부품(`Pillar`) 인식률이 상대적으로 낮음
 
 ### 3-2. Mask R-CNN
-* **성과**: Box mAP 15.4%, Mask mAP 16.5%로 기대보다 낮은 성능 기록.
+* **성과**: Box mAP 15.4%, Mask mAP 16.5%로 기대보다 낮은 성능 기록
 * **원인 분석**:
-    * **데이터 특성**: YOLO의 강력한 Mosaic Augmentation 등이 적용되지 않아, 데이터가 부족한 클래스(Wheel, Pillar 등) 학습에 실패한 것으로 추정.
-    * **속도**: 7.99 FPS로 YOLO 대비 2배 느려, 실시간 서비스에는 부적합.
+    * **데이터 특성**: YOLO의 강력한 Mosaic Augmentation 등이 적용되지 않아, 데이터가 부족한 클래스(Wheel, Pillar 등) 학습에 실패한 것으로 추정
+    * **속도**: 7.99 FPS로 YOLO 대비 2배 느려, 실시간 서비스에는 부적합
 * **가능성**: 추가적인 튜닝과 데이터 증강(Augmentation)을 적용한다면 정밀도(Mask Quality)는 개선될 여지가 있음.
 
 ### 3-3. U-Net
-* **성과**: mIoU 10.35%로 사실상 탐지 실패.
+* **성과**: mIoU 10.35%로 사실상 탐지 실패
 * **한계점**:
-    * **Class Imbalance**: 배경이 90% 이상인 차량 이미지 특성상 배경 편향(Bias) 발생.
-    * **Instance 구분 불가**: 인접한 손상을 하나의 덩어리로 인식하여 '수리 견적'이라는 프로젝트 목적에 부합하지 않음.
+    * **Class Imbalance**: 배경이 90% 이상인 차량 이미지 특성상 배경 편향(Bias) 발생
+    * **Instance 구분 불가**: 인접한 손상을 하나의 덩어리로 인식하여 '수리 견적'이라는 프로젝트 목적에 부합하지 않음
 
 ---
 
@@ -97,44 +99,44 @@
 | <img src="./results/performance_correlation_plot.png" width="80%"> |
 
 #### 📊 클래스별 상세 현황
-| 순위 | 부위 명칭 (Class Name) | Train | Val | Test | Total | Test mAP |
+| No | 부위 명칭 (Class Name) | Train | Val | Test | Total | Test mAP |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| 7 | Front bumper | 3,380 | 741 | 707 | 4,828 | **0.9049** |
+| 1 | Front bumper | 3,380 | 741 | 707 | 4,828 | **0.9049** |
 | 2 | Rear bumper | 2,105 | 482 | 477 | 3,064 | **0.8991** |
-| 6 | Front fender(R) | 754 | 164 | 168 | 1,086 | **0.6617** |
-| 1 | Front fender(L) | 675 | 129 | 175 | 979 | **0.6022** |
-| 4 | Trunk lid | 530 | 120 | 109 | 759 | **0.5378** |
-| 13 | Rear fender(R) | 500 | 106 | 114 | 720 | **0.5516** |
+| 3 | Front fender(R) | 754 | 164 | 168 | 1,086 | **0.6617** |
+| 4 | Front fender(L) | 675 | 129 | 175 | 979 | **0.6022** |
+| 5 | Trunk lid | 530 | 120 | 109 | 759 | **0.5378** |
+| 6 | Rear fender(R) | 500 | 106 | 114 | 720 | **0.5516** |
 | 8 | Bonnet | 505 | 106 | 83 | 694 | **0.6580** |
-| 14 | Rear fender(L) | 402 | 79 | 102 | 583 | **0.5483** |
-| 12 | Head lights(R) | 376 | 74 | 62 | 512 | **0.2782** |
-| 10 | Rear door(R) | 333 | 77 | 70 | 480 | **0.5752** |
-| 21 | Head lights(L) | 329 | 77 | 68 | 474 | **0.3472** |
-| 11 | Front door(R) | 269 | 64 | 53 | 386 | **0.4584** |
-| 3 | Front Wheel(R) | 244 | 46 | 56 | 346 | **0.3777** |
+| 9 | Rear fender(L) | 402 | 79 | 102 | 583 | **0.5483** |
+| 10 | Head lights(R) | 376 | 74 | 62 | 512 | **0.2782** |
+| 11 | Rear door(R) | 333 | 77 | 70 | 480 | **0.5752** |
+| 12 | Head lights(L) | 329 | 77 | 68 | 474 | **0.3472** |
+| 13 | Front door(R) | 269 | 64 | 53 | 386 | **0.4584** |
+| 14 | Front Wheel(R) | 244 | 46 | 56 | 346 | **0.3777** |
 | 15 | Rocker panel(R) | 236 | 46 | 43 | 325 | **0.2521** |
-| 19 | Rear door(L) | 205 | 49 | 46 | 300 | **0.4160** |
+| 16 | Rear door(L) | 205 | 49 | 46 | 300 | **0.4160** |
 | 17 | Side mirror(R) | 218 | 49 | 32 | 299 | **0.4755** |
-| 23 | Front door(L) | 207 | 39 | 49 | 295 | **0.3868** |
-| 20 | Side mirror(L) | 177 | 31 | 40 | 248 | **0.3487** |
-| 16 | Rear lamp(L) | 153 | 25 | 37 | 215 | **0.2051** |
-| 24 | Rear lamp(R) | 151 | 38 | 24 | 213 | **0.3780** |
+| 18 | Front door(L) | 207 | 39 | 49 | 295 | **0.3868** |
+| 19 | Side mirror(L) | 177 | 31 | 40 | 248 | **0.3487** |
+| 20 | Rear lamp(L) | 153 | 25 | 37 | 215 | **0.2051** |
+| 21 | Rear lamp(R) | 151 | 38 | 24 | 213 | **0.3780** |
 | 22 | Front Wheel(L) | 144 | 29 | 32 | 205 | **0.1886** |
-| 5 | Rocker panel(L) | 121 | 21 | 36 | 178 | **0.1592** |
-| 9 | Rear Wheel(R) | 97 | 24 | 16 | 137 | **0.2370** |
-| 18 | Rear Wheel(L) | 68 | 9 | 6 | 83 | **0.0343** |
-| 28 | Rear windshield | 24 | 3 | 1 | 28 | **0.1567** |
-| 25 | Windshield | 14 | 4 | 3 | 21 | **0.0000** |
-| 31 | C pillar(R) | 4 | 5 | 1 | 10 | **0.0000** |
-| 30 | A pillar(L) | 5 | 1 | 1 | 7 | **0.0000** |
-| 32 | A pillar(R) | 2 | 1 | 4 | 7 | **0.0000** |
-| 27 | Undercarriage | 3 | 1 | 2 | 6 | **0.0000** |
-| 29 | C pillar(L) | 4 | 0 | 0 | 4 | **0.3546** |
-| 26 | Roof | 2 | 0 | 0 | 2 | **0.3546** |
+| 23 | Rocker panel(L) | 121 | 21 | 36 | 178 | **0.1592** |
+| 24 | Rear Wheel(R) | 97 | 24 | 16 | 137 | **0.2370** |
+| 25 | Rear Wheel(L) | 68 | 9 | 6 | 83 | **0.0343** |
+| 26 | Rear windshield | 24 | 3 | 1 | 28 | **0.1567** |
+| 27 | Windshield | 14 | 4 | 3 | 21 | **0.0000** |
+| 28 | C pillar(R) | 4 | 5 | 1 | 10 | **0.0000** |
+| 29 | A pillar(L) | 5 | 1 | 1 | 7 | **0.0000** |
+| 30 | A pillar(R) | 2 | 1 | 4 | 7 | **0.0000** |
+| 31 | Undercarriage | 3 | 1 | 2 | 6 | **0.0000** |
+| 32 | C pillar(L) | 4 | 0 | 0 | 4 | **0.3546** |
+| 33 | Roof | 2 | 0 | 0 | 2 | **0.3546** |
 
 ### ⚠️ 예측값 신뢰도 분포 (Confidence Distribution)
-- **현상**: 낮은 신뢰도(0.0~0.1) 구간의 예측값이 전체의 **43.86%**를 차지함.
-- **해결책**: Inference 시 **Confidence Threshold를 0.25 이상**으로 설정하여 노이즈(False Positive)를 제거하면 정밀도가 대폭 향상됨.
+- **현상**: 낮은 신뢰도(0.0~0.1) 구간의 예측값이 전체의 **43.86%** 를 차지함.
+- **해결책**: Inference 시 **Confidence Threshold를 0.25 이상**으로 설정하여 노이즈(False Positive)를 제거하면 정밀도가 대폭 향상됨
 
 | 점수 구간 (Range) | 비율 (Ratio) | 분석 (Insight) |
 | :---: | :---: | :--- |
@@ -157,9 +159,9 @@
 ## 🚀 6. 결론 및 향후 계획 (Conclusion)
 
 ### ✅ 최종 모델 선정: **YOLOv8x-Seg**
-수리비 견적 시스템의 핵심인 **"개별 부품 식별(Instance Seg)"** 능력과 **주요 부품의 높은 정확도(mAP 0.90+)"** 를 근거로 최종 모델로 선정하였습니다.
+수리비 견적 시스템의 핵심인 **"개별 부품 식별(Instance Seg)"** 능력과 **주요 부품의 높은 정확도(mAP 0.90+)"** 를 근거로 최종 모델로 선정
 
 ### 🔧 향후 개선 과제 (To-Do)
-1.  **Hard Example Mining**: 인식률이 0에 가까운 `Pillar`, `Windshield` 클래스에 대한 데이터 집중 수집 및 증강(Crop/Rotation).
-2.  **Ensemble (앙상블)**: YOLO의 높은 Recall과 Mask R-CNN의 정밀한 Mask를 결합하는 앙상블 기법 연구.
-3.  **Post-processing**: 예측된 Mask의 경계면을 매끄럽게 다듬는 후처리 알고리즘 적용.
+1.  **Hard Example Mining**: 인식률이 0에 가까운 `Pillar`, `Windshield` 클래스에 대한 데이터 집중 수집 및 증강(Crop/Rotation)
+2.  **Ensemble (앙상블)**: YOLO의 높은 Recall과 Mask R-CNN의 정밀한 Mask를 결합하는 앙상블 기법 연구
+3.  **Post-processing**: 예측된 Mask의 경계면을 매끄럽게 다듬는 후처리 알고리즘 적용
