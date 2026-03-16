@@ -1,4 +1,4 @@
-# 🚗 Car Damage Detection Model Comparison
+# 🚗 Car Damage Segmentation Model Comparison
 ## : YOLOv8 vs Mask R-CNN vs U-Net
 
 본 프로젝트는 차량 파손 부위(범퍼, 휀다, 휠 등)를 정밀하게 탐지하고 견적을 산출하기 위해 **One-stage Instance Segmentation (YOLOv8)**, **Two-stage Instance Segmentation (Mask R-CNN)**, 그리고 **Semantic Segmentation (U-Net)** 세 가지 모델을 학습하고 성능을 비교 분석한 리포트입니다.
