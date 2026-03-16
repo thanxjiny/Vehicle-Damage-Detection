@@ -1,3 +1,7 @@
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://colab.research.google.com/github/hdmf-ai-auto-spoke/Vehicle-Damage-Detection/blob/main/notebooks/10_Car_Damage_Segmentation_2st/4_study4_damage_part_classification_yolo_view8.ipynb)
+
+
 # Vehicle 8-View Classifier (Rule-based)
 
 기존에 학습된 **YOLOv8-Seg (차량 파손/부품 탐지)** 모델의 예측 결과를 활용하여, **차량의 촬영 방향(8면)** 을 자동으로 분류
