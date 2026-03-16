@@ -26,6 +26,8 @@
 | **2** | Breakage |  3,000 |파손, 깨짐|
 | **3** | Crushed  | 3,000 |찌그러짐|
 
+* 데이터셋 경로 : "/content/drive/MyDrive/03. HDMF/(share)HDMF_AUTO_SPOKE/DATA/AI_HUB_DAMAGE_DATASET/"
+
 ```text
 AI_HUB_DAMAGE_DATASET/
 ├── images/
